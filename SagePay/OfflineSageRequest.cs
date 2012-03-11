@@ -12,6 +12,11 @@ namespace OrangeTentacle.SagePay
             Vendor = new VendorConfiguration(config.VendorName);
         }
 
+        public OfflineSageRequest(string name)
+        {
+            Vendor = new VendorConfiguration(name);
+        }
+
         //public object Send()
         //{
         //    return "";
@@ -23,6 +28,9 @@ namespace OrangeTentacle.SagePay
 
             public VendorConfiguration(string vendorName)
             {
+                if (string.IsNullOrWhiteSpace(vendorName))
+                    throw new ConfigurationErrorsException("Vendor Must Have VendorName");
+
                 VendorName = vendorName;
             }
         }
