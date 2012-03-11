@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace OrangeTentacle.SagePay
@@ -8,9 +9,8 @@ namespace OrangeTentacle.SagePay
     public class OfflineSageRequest
     {
         public VendorRequest Vendor { get; private set; }
+        public TransactionRequest Transaction { get; set; }
         public bool IsValid { get; private set; }
-
-
 
         public OfflineSageRequest()
         {
@@ -23,9 +23,16 @@ namespace OrangeTentacle.SagePay
             Vendor = new VendorRequest(name);
         }
 
-        public void Validate()
+        public List<ValidationError> Validate()
         {
-            IsValid = true;
+            IsValid = false; // Guilty until proven innocent.
+
+            if (Transaction == null)
+                throw new SageException("No Transaction Set");
+
+            var errors = Transaction.Validate();
+            IsValid = ! errors.Any();
+            return errors;
         }
 
         public object Send()
@@ -78,77 +85,5 @@ namespace OrangeTentacle.SagePay
         }
 
 
-    }
-
-    public class Luhn
-    {
-        public static bool IsValid(string number)
-        {
-            var reversed = number.ToCharArray();
-            Array.Reverse(reversed);
-
-            var sum = 0;
-            for (int i = 0; i < number.Length; i++ )
-            {
-                var result = char.GetNumericValue(reversed[i]);
-                if (result == -1)
-                    return false;
-
-                if (i % 2 == 0)
-                    sum += (int)result;
-                else
-                {
-                    result = result*2;
-                    var tens = (int) (result/10);
-                    result = tens + result - (tens * 10);
-                    sum += (int)result;
-                }
-            }
-            return sum % 10 == 0;
-        }
-    }
-
-    public class ValidationError
-    {
-        public string Field { get; set; }
-        public string Message { get; set; }
-    }
-
-    public enum CardType
-    {
-        Visa,
-        Mc,
-        Delta,
-        Maestro,
-        Uke,
-        Amex,
-        Dc,
-        Jcb,
-        Laser
-    }
-
-    public class OfflineSageConfiguration : ConfigurationSection
-    {
-        private const string sectionName = "OfflineSageConfiguration";
-
-        public static OfflineSageConfiguration GetSection()
-        {
-            return ConfigurationManager.GetSection(sectionName) as OfflineSageConfiguration;
-        }
-
-        [ConfigurationProperty("vendorName", IsRequired = true)]
-        public string VendorName
-        {
-            get { return (string)this["vendorName"]; }
-        }
-    }
-
-    public class SageException : Exception
-    {
-        public SageException()
-        {}
-
-        public SageException(string message) : base(message)
-        {}
     }
 }

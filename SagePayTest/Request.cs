@@ -33,6 +33,34 @@ namespace OrangeTentacle.SagePayTest
         }
 
         [TestFixture]
+        internal class Validate
+        {
+            [Test]
+            public void ReturnsErrors()
+            {
+                var request = new SagePay.OfflineSageRequest();
+                request.Transaction = TransactionRequest.SampleRequest();
+                request.Transaction.CV2 = "12";
+                var errors = request.Validate();
+
+                Assert.AreEqual(1, errors.Count);
+                Assert.AreEqual("CV2", errors.First().Field);
+                Assert.IsFalse(request.IsValid);
+            }
+
+            [Test]
+            public void SetsIsValid()
+            {
+                var request = new SagePay.OfflineSageRequest();
+                request.Transaction = TransactionRequest.SampleRequest();
+                var errors = request.Validate();
+
+                Assert.AreEqual(0, errors.Count);
+                Assert.IsTrue(request.IsValid);                
+            }
+        }
+
+        [TestFixture]
         internal class Send
         {
             [Test]
@@ -47,6 +75,7 @@ namespace OrangeTentacle.SagePayTest
             public void EmitsAResponseIsValid()
             {
                 var request = new SagePay.OfflineSageRequest();
+                request.Transaction = TransactionRequest.SampleRequest();
                 request.Validate();
 
                 var response = request.Send();
@@ -239,56 +268,4 @@ namespace OrangeTentacle.SagePayTest
         }
 
 }
-
-    [TestFixture]
-    public class OfflineSageConfiguration
-    {
-        [TestFixture]
-        internal class VendorName
-        {
-            [Test]
-            public void FromConfigFile()
-            {
-                var section = SagePay.OfflineSageConfiguration.GetSection();
-                Assert.IsFalse(string.IsNullOrWhiteSpace(section.VendorName));
-            }
-        }
-    }
-
-    [TestFixture]
-    public class Luhn
-    {
-        [TestFixture]
-        internal class IsValid
-        {
-            [Test]
-            public void NonNumeric()
-            {
-                var number = "79927398713a";
-                Assert.IsFalse(SagePay.Luhn.IsValid(number));
-            }
-
-            [Test]
-            public void Valid()
-            {
-                var number = "79927398713";
-                Assert.IsTrue(SagePay.Luhn.IsValid(number));                
-            }
-
-            [Test]
-            public void InValid()
-            {
-                var number = "79927398723";
-                Assert.IsFalse(SagePay.Luhn.IsValid(number));
-            }
-
-            [Test]
-            [Factory(typeof(SampleCard), "AllCards")]
-            public void AllCardsAreValid(SampleCard card)
-            {
-                Assert.IsTrue(SagePay.Luhn.IsValid(card.Number), 
-                    string.Format("{0} card does not validate", card.CardType));
-            }
-        }
-    }
 }

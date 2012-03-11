@@ -41,8 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardType.cs" />
+    <Compile Include="Luhn.cs" />
+    <Compile Include="OfflineSageConfiguration.cs" />
     <Compile Include="OfflineSageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SageException.cs" />
+    <Compile Include="ValidationError.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
