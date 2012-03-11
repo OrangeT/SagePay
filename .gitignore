@@ -1,0 +1,7 @@
+# git ignore file
+_Resharper.SagePay
+*.suo
+*.TeamCity.*
+obj
+bin
+App.config

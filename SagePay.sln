@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagePay", "SagePay\SagePay.csproj", "{4642C400-385F-4462-8CD7-6F86E169DE67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagePayTest", "SagePayTest\SagePayTest.csproj", "{3C549D26-648D-4577-A7E5-2875D3B01DFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_References", "_References", "{27AC9C86-D75C-45D7-A388-DA6637F84796}"
+	ProjectSection(SolutionItems) = preProject
+		_References\Gallio.dll = _References\Gallio.dll
+		_References\Gallio35.dll = _References\Gallio35.dll
+		_References\Gallio40.dll = _References\Gallio40.dll
+		_References\MbUnit.dll = _References\MbUnit.dll
+		_References\MbUnit35.dll = _References\MbUnit35.dll
+		_References\MbUnit40.dll = _References\MbUnit40.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4642C400-385F-4462-8CD7-6F86E169DE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4642C400-385F-4462-8CD7-6F86E169DE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4642C400-385F-4462-8CD7-6F86E169DE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4642C400-385F-4462-8CD7-6F86E169DE67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C549D26-648D-4577-A7E5-2875D3B01DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C549D26-648D-4577-A7E5-2875D3B01DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C549D26-648D-4577-A7E5-2875D3B01DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C549D26-648D-4577-A7E5-2875D3B01DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
