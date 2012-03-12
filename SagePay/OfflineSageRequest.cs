@@ -3,6 +3,11 @@ using System.Linq;
 
 namespace OrangeTentacle.SagePay
 {
+    public class SageRequest
+    {
+        
+    }
+
     public class OfflineSageRequest
     {
         public VendorRequest Vendor { get; private set; }

@@ -8,7 +8,6 @@ namespace OrangeTentacle.SagePay
     {
         public string VPSProtocol { get { return "2.23"; } }
         public PaymentType TxType { get; set; }
-        public VendorRequest Vendor { get; private set; }
         public string VendorTxCode { get; set; }
 
         public decimal Amount { get; set; }
@@ -23,11 +22,6 @@ namespace OrangeTentacle.SagePay
 
         public TransactionAddress Billing { get; set; }
         public TransactionAddress Delivery { get; set; }
-
-        public TransactionRequest(VendorRequest vendor)
-        {
-            Vendor = vendor;
-        }
 
         public List<ValidationError> Validate()
         {
