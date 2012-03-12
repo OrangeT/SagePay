@@ -55,7 +55,7 @@ namespace OrangeTentacle.SagePay
         {
             OK,
             NoAuth,
-            CanAuth,
+            CantAuth,
             NotAuthed,
             AttemptOnly,
             NotChecked,

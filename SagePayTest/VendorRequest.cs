@@ -29,7 +29,7 @@ namespace OrangeTentacle.SagePayTest
 
         public static SagePay.VendorRequest SampleRequest()
         {
-            var name = SagePay.OfflineSageConfiguration.GetSection().VendorName;
+            var name = SagePay.SageConfiguration.GetSection(SageConfiguration.CONFIG_SECTION).VendorName;
             var request = new SagePay.VendorRequest(name);
 
             return request;

@@ -1,47 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 
 namespace OrangeTentacle.SagePay
 {
-    public class SageRequest
+    public class OfflineSageRequest : SageRequest
     {
-        
-    }
-
-    public class OfflineSageRequest
-    {
-        public VendorRequest Vendor { get; private set; }
-        public TransactionRequest Transaction { get; set; }
-        public bool IsValid { get; private set; }
-
-        public OfflineSageRequest()
+        public OfflineSageRequest() 
+            : base("OfflineSageConfiguration")
         {
-            var config = OfflineSageConfiguration.GetSection();
-            Vendor = new VendorRequest(config.VendorName);
         }
 
-        public OfflineSageRequest(string name)
-        {
-            Vendor = new VendorRequest(name);
-        }
+        public OfflineSageRequest(string vendorName)
+            : base(vendorName, true)
+        {}
 
-        public List<ValidationError> Validate()
-        {
-            IsValid = false; // Guilty until proven innocent.
-
-            if (Transaction == null)
-                throw new SageException("No Transaction Set");
-
-            var errors = Transaction.Validate();
-            IsValid = ! errors.Any();
-            return errors;
-        }
-
-        public object Send()
+        public override TransactionResponse Send()
         {
             if (! IsValid)
                 throw new SageException("Configuration Must Be Valid");
-            return "";
+            return new TransactionResponse();
         }
     }
 }

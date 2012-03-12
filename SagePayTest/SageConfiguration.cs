@@ -3,15 +3,17 @@ using MbUnit.Framework;
 namespace OrangeTentacle.SagePayTest
 {
     [TestFixture]
-    public class OfflineSageConfiguration
+    public class SageConfiguration
     {
+        public const string CONFIG_SECTION = "OfflineSageConfiguration";
+
         [TestFixture]
         internal class VendorName
         {
             [Test]
             public void FromConfigFile()
             {
-                var section = SagePay.OfflineSageConfiguration.GetSection();
+                var section = SagePay.SageConfiguration.GetSection(CONFIG_SECTION);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(section.VendorName));
             }
         }

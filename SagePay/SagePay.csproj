@@ -43,15 +43,17 @@
   <ItemGroup>
     <Compile Include="CardType.cs" />
     <Compile Include="Luhn.cs" />
-    <Compile Include="OfflineSageConfiguration.cs" />
+    <Compile Include="SageConfiguration.cs" />
     <Compile Include="OfflineSageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SageException.cs" />
+    <Compile Include="SageRequest.cs" />
     <Compile Include="TransactionAddress.cs" />
     <Compile Include="TransactionRequest.cs" />
     <Compile Include="TransactionResponse.cs" />
     <Compile Include="ValidationError.cs" />
     <Compile Include="VendorRequest.cs" />
+    <Compile Include="WebSageRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
