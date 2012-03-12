@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
+using System.Linq;
 
 namespace OrangeTentacle.SagePay
 {
@@ -41,7 +42,7 @@ namespace OrangeTentacle.SagePay
             collection.Add("Description", Transaction.Description);
             collection.Add("CardHolder", Transaction.CardHolderName);
             collection.Add("CardNumber", Transaction.CardNumber);
-            collection.Add("ExpiryDate", Transaction.ExpiryDate.ToShortDateString());
+            collection.Add("ExpiryDate", Transaction.ExpiryDate.ToString("MMyy"));
             collection.Add("CV2", Transaction.CV2);
             collection.Add("CardType", Transaction.CardType.ToString());
             collection.Add("BillingSurname", Transaction.Billing.Surname);
@@ -68,22 +69,51 @@ namespace OrangeTentacle.SagePay
 
             foreach(var line in lines)
             {
+                if (String.IsNullOrWhiteSpace(line))
+                    continue;
+
                 var values = line.Split('=');
                 collection.Add(values[0].Trim(), values[1].Trim());
             }
 
-            // response.VPSProtocol = collection["VPSProtocol"];
             response.Status = EnumFromString<TransactionResponse.ResponseStatus>(collection["Status"]);
             response.StatusDetail = collection["StatusDetail"];
-            response.VPSTxId = collection["VPSTxId"];
-            response.SecurityKey = collection["SecurityKey"];
-            response.TxAuthNo = long.Parse(collection["TxAuthNo"]);
-            response.AVSCV2 = EnumFromString<TransactionResponse.CV2Status>(collection["AVSCV2"]);
-            response.AddressResult = EnumFromString<TransactionResponse.MatchStatus>(collection["AddressResult"]);
-            response.PostCodeResult = EnumFromString<TransactionResponse.MatchStatus>(collection["PostCodeResult"]);
-            response.CV2Result = EnumFromString<TransactionResponse.MatchStatus>(collection["CV2Result"]);
-            response.ThreeDSecure = EnumFromString<TransactionResponse.ThreeDSecureStatus>(collection["3DSecureStatus"]);
-            response.Caav = collection["CAVV"];
+
+            if (response.Status == TransactionResponse.ResponseStatus.Invalid ||
+                response.Status == TransactionResponse.ResponseStatus.Error)
+                return response;
+
+            if (response.Status == TransactionResponse.ResponseStatus.OK)
+                response.TxAuthNo = long.Parse(collection["TxAuthNo"]);
+
+            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth)
+                response.VPSTxId = collection["VPSTxId"];
+
+            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth &&
+                response.Status != TransactionResponse.ResponseStatus.Ppredirect)
+                response.SecurityKey = collection["SecurityKey"];
+
+            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth &&
+                response.Status != TransactionResponse.ResponseStatus.Authenticated &&
+                response.Status != TransactionResponse.ResponseStatus.Registered &&
+                response.Status != TransactionResponse.ResponseStatus.Ppredirect)
+            {
+
+                response.AVSCV2 = EnumFromString<TransactionResponse.CV2Status>(collection["AVSCV2"]);
+                response.AddressResult = EnumFromString<TransactionResponse.MatchStatus>(collection["AddressResult"]);
+                response.PostCodeResult = EnumFromString<TransactionResponse.MatchStatus>(collection["PostCodeResult"]);
+                response.CV2Result = EnumFromString<TransactionResponse.MatchStatus>(collection["CV2Result"]);
+            }
+
+            // Doc state that if not enabled, should return "NOTCHECKED"
+            // Nothing being returned from simulator - therefore default response.
+            response.ThreeDSecure = TransactionResponse.ThreeDSecureStatus.NotChecked;
+            if (collection.ContainsKey("3DSecureStatus"))
+                response.ThreeDSecure = EnumFromString<TransactionResponse.ThreeDSecureStatus>(collection["3DSecureStatus"]);
+
+            if (response.ThreeDSecure == TransactionResponse.ThreeDSecureStatus.OK &&
+                response.Status == TransactionResponse.ResponseStatus.OK)
+                response.Caav = collection["CAVV"];
 
             return response;
 
@@ -101,9 +131,10 @@ namespace OrangeTentacle.SagePay
                 throw new SageException("Configuration Must Be Valid");
 
             WebClient client = new WebClient();
-            //var response = client.UploadValues(Url, Render());
+            var response = client.UploadValues(Url, Encode());
+            var textResponse = System.Text.Encoding.UTF8.GetString(response);
 
-            return new TransactionResponse();
+            return Decode(textResponse);
         }
     }
 }

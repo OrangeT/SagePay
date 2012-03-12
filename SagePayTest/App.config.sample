@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<configSections>
+		<section name="OfflineSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+		<section name="SimulatorSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+		<section name="TestSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+		<section name="LiveSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+	</configSections>
+
+	<OfflineSagePay vendorName="SampleVendor" />
+	<SimulatorSagePay vendorName="SampleVendor" />
+	<TestSagePay vendorName="SampleVendor" />
+	<LiveSagePay vendorName="SampleVendor" />
+</configuration>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
@@ -33,7 +34,7 @@ namespace OrangeTentacle.SagePayTest
             Collection.Add("VPSProtocol", "2.23");
             Collection.Add("Status", "OK");
             Collection.Add("StatusDetail", "Lorem Ipsum");
-            Collection.Add("VPSTxId", "123456");
+            Collection.Add("VPSTxId", Guid.NewGuid().ToString());
             Collection.Add("SecurityKey", "12341231aa");
             Collection.Add("TxAuthNo", "43152123141231231");
             Collection.Add("AVSCV2", "ALL MATCH");

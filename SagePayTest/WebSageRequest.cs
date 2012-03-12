@@ -52,6 +52,16 @@ namespace OrangeTentacle.SagePayTest
             }
 
             [Test]
+            public void ExpiryDateFormat()
+            {
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                request.Transaction = TransactionRequest.SampleRequest();
+                var encode = request.Encode();
+                
+                Assert.AreEqual(string.Format("{0:MMyy}", request.Transaction.ExpiryDate),encode["ExpiryDate"]);
+            }
+
+            [Test]
             [Row(SagePay.TransactionRequest.PaymentType.AuthenticateOnly, "AUTHENTICATE ONLY")]
             [Row(SagePay.TransactionRequest.PaymentType.Payment, "PAYMENT")]
             [Row(SagePay.TransactionRequest.PaymentType.Deferred, "DEFERRED")]

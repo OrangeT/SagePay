@@ -5,7 +5,7 @@ namespace OrangeTentacle.SagePayTest
     [TestFixture]
     public class SageConfiguration
     {
-        public const string CONFIG_SECTION = "OfflineSageConfiguration";
+        public const string CONFIG_SECTION = "OfflineSagePay";
 
         [TestFixture]
         internal class VendorName

@@ -223,7 +223,7 @@ namespace OrangeTentacle.SagePayTest
         {
             var request = new SagePay.TransactionRequest();
 
-            request.VendorTxCode = "12345";
+            request.VendorTxCode = Guid.NewGuid().ToString();
             request.Amount = 100;
             request.Description = "Lorem Ipsum";
 
