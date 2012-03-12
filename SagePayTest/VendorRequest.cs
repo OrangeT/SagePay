@@ -26,5 +26,13 @@ namespace OrangeTentacle.SagePayTest
                 var vendor = new OrangeTentacle.SagePay.VendorRequest(name);
             }
         }
+
+        public static SagePay.VendorRequest SampleRequest()
+        {
+            var name = SagePay.OfflineSageConfiguration.GetSection().VendorName;
+            var request = new SagePay.VendorRequest(name);
+
+            return request;
+        }
     }
 }

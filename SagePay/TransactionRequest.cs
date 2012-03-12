@@ -6,6 +6,15 @@ namespace OrangeTentacle.SagePay
 {
     public class TransactionRequest
     {
+        public string VPSProtocol { get { return "2.23"; } }
+        public PaymentType TxType { get; set; }
+        public VendorRequest Vendor { get; private set; }
+        public string VendorTxCode { get; set; }
+
+        public decimal Amount { get; set; }
+        public Currency Currency { get; set; }
+        public string Description { get; set; }
+
         public string CardHolderName { get; set; }
         public CardType CardType { get; set; }
         public string CardNumber { get; set; }
@@ -15,9 +24,24 @@ namespace OrangeTentacle.SagePay
         public TransactionAddress Billing { get; set; }
         public TransactionAddress Delivery { get; set; }
 
+        public TransactionRequest(VendorRequest vendor)
+        {
+            Vendor = vendor;
+        }
+
         public List<ValidationError> Validate()
         {
             var errors = new List<ValidationError>();
+
+            if (String.IsNullOrWhiteSpace(VendorTxCode))
+                errors.Add(new ValidationError { Field = "VendorTxCode", Message = "Must Not Be Blank" });
+
+            if (Amount <= 0)
+                errors.Add(new ValidationError { Field = "Amount", Message = "Must Not Greater Than Zero" });
+
+            if (String.IsNullOrWhiteSpace(Description))
+                errors.Add(new ValidationError { Field = "Description", Message = "Must Not Be Blank" });
+
             if (String.IsNullOrWhiteSpace(CardHolderName))
                 errors.Add(new ValidationError { Field = "CardHolderName", Message = "Must Not Be Blank"});
 
@@ -44,42 +68,18 @@ namespace OrangeTentacle.SagePay
 
             return errors;
         }
+
+        public enum PaymentType
+        {
+            Payment,
+            Deferred,
+            AuthenticateOnly
+        }
     }
 
-    public class TransactionAddress
+    public enum Currency
     {
-        public string Surname { get; set; }
-        public string Firstnames { get; set; }
-        public string Address1 { get; set; }
-        public string City { get; set; }
-        public string PostCode { get; set; }
-        public string Country { get; set; }
-
-        public bool IsValid { get; set; }
- 
-        public List<ValidationError> Validate(string prefix = "")
-        {
-            var errors = new List<ValidationError>();
-
-            if (string.IsNullOrWhiteSpace(Surname))
-                errors.Add(new ValidationError {Field = prefix + "Surname", Message = "Must Not By Empty"});
-
-            if (string.IsNullOrWhiteSpace(Firstnames))
-                errors.Add(new ValidationError { Field = prefix + "Firstnames", Message = "Must Not By Empty" });
-
-            if (string.IsNullOrWhiteSpace(Address1))
-                errors.Add(new ValidationError { Field = prefix + "Address1", Message = "Must Not By Empty" });
-
-            if (string.IsNullOrWhiteSpace(City))
-                errors.Add(new ValidationError { Field = prefix + "City", Message = "Must Not By Empty" });
-
-            if (string.IsNullOrWhiteSpace(PostCode))
-                errors.Add(new ValidationError { Field = prefix + "Postcode", Message = "Must Not By Empty" });
-
-            if (string.IsNullOrWhiteSpace(Country))
-                errors.Add(new ValidationError { Field = prefix + "Country", Message = "Must Not By Empty" });
-
-            return errors;
-        }
+        GBP,
+        USD
     }
 }

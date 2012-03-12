@@ -10,6 +10,19 @@ namespace OrangeTentacle.SagePayTest
     {
 
         [TestFixture]
+        internal class Constructor
+        {
+            [Test]
+            public void TakesAVendor()
+            {
+                var vendorRequest = SagePayTest.VendorRequest.SampleRequest();
+                var request = new SagePay.TransactionRequest(vendorRequest);
+
+                Assert.AreEqual(vendorRequest, request.Vendor);
+            }
+        }
+
+        [TestFixture]
         internal class Validate
         {
             [Test]
@@ -19,6 +32,39 @@ namespace OrangeTentacle.SagePayTest
                 var errors = request.Validate();
 
                 Assert.AreEqual(0, errors.Count);
+            }
+
+            [Test]
+            public void VendorTxCodeMissing()
+            {
+                var request = SampleRequest();
+                request.VendorTxCode = string.Empty;
+                var errors = request.Validate();
+
+                Assert.AreEqual(1, errors.Count);
+                Assert.AreEqual("VendorTxCode", errors.First().Field);
+            }
+
+            [Test]
+            public void AmountMissing()
+            {
+                var request = SampleRequest();
+                request.Amount = 0;
+                var errors = request.Validate();
+
+                Assert.AreEqual(1, errors.Count);
+                Assert.AreEqual("Amount", errors.First().Field);
+            }
+
+            [Test]
+            public void DescriptionMissing()
+            {
+                var request = SampleRequest();
+                request.Description = string.Empty;
+                var errors = request.Validate();
+
+                Assert.AreEqual(1, errors.Count);
+                Assert.AreEqual("Description", errors.First().Field);
             }
 
             [Test]
@@ -189,14 +235,18 @@ namespace OrangeTentacle.SagePayTest
 
         public static SagePay.TransactionRequest SampleRequest()
         {
-            var request = new SagePay.TransactionRequest();
+            var request = new SagePay.TransactionRequest(VendorRequest.SampleRequest());
+
+            request.VendorTxCode = "12345";
+            request.Amount = 100;
+            request.Description = "Lorem Ipsum";
+
             request.CardHolderName = "MR K R RYAN";
             request.CardType = CardType.Visa;
             request.CardNumber = SampleCard.VISA;
             request.ExpiryDate = DateTime.Now.AddMonths(6);
             request.CV2 = SampleCard.CV2;
 
-            var address = new SagePay.TransactionAddress();
             request.Billing = request.Delivery = TransactionAddress.SampleAddress();
 
             return request;
