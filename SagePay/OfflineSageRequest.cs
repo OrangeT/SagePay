@@ -5,7 +5,7 @@ namespace OrangeTentacle.SagePay
     public class OfflineSageRequest : SageRequest
     {
         public OfflineSageRequest() 
-            : base("OfflineSageConfiguration")
+            : base("OfflineSagePay")
         {
         }
 
