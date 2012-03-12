@@ -1,8 +1,8 @@
 SagePay Direct Access Library
 ==
 
-This is a C# library for accessing SagePay Direct Integration.  Currently, it is 
-only scoped to handle requests and responses for non 3DAuth requests.
+This is a C# library for providing SagePay Direct Integration to your .NET application.  
+Currently, it is only scoped to handle requests and responses for non 3DAuth transactions.
 
 This library has been built as a component of a larger application, and as such, 
 is tailored to match that need.  As development on the main application progresses, 
