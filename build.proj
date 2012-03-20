@@ -10,7 +10,7 @@
 		<MSBuild Projects="SagePayTest/SagePayTest.csproj" />
 
 		<ItemGroup>
-			<TestFile Include="Tests/bin/Debug/SagePayTest.dll" />
+			<TestFile Include="SagePayTest/bin/Debug/SagePayTest.dll" />
 		</ItemGroup>
 
 		<Gallio IgnoreFailures="false" Files="@(TestFile)" Filter="exclude Type: PrintTest" >
