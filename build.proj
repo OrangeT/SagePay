@@ -3,10 +3,12 @@
 
 	<Target Name="Compile">
 		<MSBuild Projects="SagePay/SagePay.csproj" />
-		<MSBuild Projects="SagePayTest/SagePayTest.csproj" />
 	</Target>
 
 	<Target Name="Test" DependsOnTargets="Compile">
+		<Copy SourceFiles="SagePayTest/App.config.sample" DestinationFiles="SagePayTest/App.config.sample" />
+		<MSBuild Projects="SagePayTest/SagePayTest.csproj" />
+
 		<ItemGroup>
 			<TestFile Include="Tests/bin/Debug/SagePayTest.dll" />
 		</ItemGroup>
