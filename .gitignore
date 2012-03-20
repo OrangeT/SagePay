@@ -4,6 +4,5 @@ _Resharper.SagePay
 *.TeamCity.*
 obj
 bin
-App.config
 *.user
 *.swp

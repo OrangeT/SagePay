@@ -6,7 +6,6 @@
 	</Target>
 
 	<Target Name="Test" DependsOnTargets="Compile">
-		<Copy SourceFiles="SagePayTest/App.config.sample" DestinationFiles="SagePayTest/App.config" />
 		<MSBuild Projects="SagePayTest/SagePayTest.csproj" />
 
 		<ItemGroup>
