@@ -1,0 +1,20 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<UsingTask AssemblyFile="C:\Program Files\Gallio\bin\Gallio.MSBuildTasks.dll" TaskName="Gallio" />
+
+	<Target Name="Compile">
+		<MSBuild Projects="SagePay/SagePay.csproj" />
+		<MSBuild Projects="SagePayTest/SagePayTest.csproj" />
+	</Target>
+
+	<Target Name="Test" DependsOnTargets="Compile">
+		<ItemGroup>
+			<TestFile Include="Tests/bin/Debug/SagePayTest.dll" />
+		</ItemGroup>
+
+		<Gallio IgnoreFailures="false" Files="@(TestFile)" Filter="exclude Type: PrintTest" >
+			<Output TaskParameter="ExitCode" PropertyName="ExitCode"/>
+		</Gallio>
+		<Error Text="Tests execution failed" Condition="'$(ExitCode)' != 0" />
+	</Target>
+
+</Project>
