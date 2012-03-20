@@ -5,3 +5,5 @@ _Resharper.SagePay
 obj
 bin
 App.config
+*.user
+*.swp

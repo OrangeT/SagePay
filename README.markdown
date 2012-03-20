@@ -27,16 +27,15 @@ Add the following to your app.config/web.config
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 	<configSections>
-		<section name="OfflineSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
-		<section name="SimulatorSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
-		<section name="TestSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
-		<section name="LiveSagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+		<section name="SagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
 	</configSections>
 
-	<OfflineSagePay vendorName="vendor_name" />
-	<SimulatorSagePay vendorName="vendor_name" />
-	<TestSagePay vendorName="vendor_name" />
-	<LiveSagePay vendorName="vendor_name" />
+	<SagePay default="Live">
+		<add type="Offline" vendorName="vendor_name" />
+		<add type="Simulator" vendorName="vendor_name" />
+		<add type="Test" vendorName="vendor_name" />
+		<add type="Live" vendorName="vendor_name" />
+	</SagePay>
 </configuration>
 ```
 
@@ -46,7 +45,9 @@ Usage
 After referencing the SagePay library:
 
 ```csharp
-var  request = new SagePay.SimulatorSageRequest();
+var request = SagePayFactory.Fetch(); // Load default type
+request = request.Fetch(ProviderTypes.Live); // Load live type
+
 request.Transaction = new TransactionRequest(); // You may want to populate the transaction
 
 request.Validate(); // Non validated transactions will throw on send.
@@ -57,6 +58,5 @@ var response = request.Send();
 
 Todo
 --
-* Write a factory which will return an instance of WebSageRequest dependant
-  on the configuration file (some form of default provider-type).
 * Implement refunds.
+* Organise the library heirarchy to be a little less ... flat.

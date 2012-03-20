@@ -3,10 +3,10 @@ namespace OrangeTentacle.SagePay
     public class LiveSageRequest : WebSageRequest
     {
         private const string _url = "https://live.sagepay.com/gateway/service/vspdirect-register.vsp";
-        private const string _section = "LiveSagePay";
+        private const SagePayFactory.ProviderTypes _type = SagePayFactory.ProviderTypes.Live;
 
         public LiveSageRequest()
-            : base (_section, _url)
+            : base (_type, _url)
         {
         }
 

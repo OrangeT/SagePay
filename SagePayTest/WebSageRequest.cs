@@ -24,7 +24,7 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void TakesAnEndPointAndSection()
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(request.Url));
             }
 
@@ -43,7 +43,7 @@ namespace OrangeTentacle.SagePayTest
             [Factory(typeof(WebSageRequest), "REQUEST_FIELDS")]
             public void AllValuesInCollection(string key)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 var encode = request.Encode();
 
@@ -54,7 +54,7 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void ExpiryDateFormat()
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 var encode = request.Encode();
                 
@@ -67,7 +67,7 @@ namespace OrangeTentacle.SagePayTest
             [Row(SagePay.TransactionRequest.PaymentType.Deferred, "DEFERRED")]
             public void TxTypeTypes(SagePay.TransactionRequest.PaymentType type, string expected)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 request.Transaction.TxType = type;
                 var encode = request.Encode();
@@ -79,7 +79,7 @@ namespace OrangeTentacle.SagePayTest
             [EnumData(typeof(Currency))]
             public void CurrencyTypes(Currency currency)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_SECTION, TEST_URL);
+                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 request.Transaction.Currency = currency;
                 var encode = request.Encode();

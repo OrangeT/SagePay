@@ -5,7 +5,7 @@ namespace OrangeTentacle.SagePayTest
     [TestFixture]
     public class SageConfiguration
     {
-        public const string CONFIG_SECTION = "OfflineSagePay";
+        public const SagePay.SagePayFactory.ProviderTypes CONFIG_TYPE = SagePay.SagePayFactory.ProviderTypes.Offline;
 
         [TestFixture]
         internal class VendorName
@@ -13,7 +13,7 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void FromConfigFile()
             {
-                var section = SagePay.SageConfiguration.GetSection(CONFIG_SECTION);
+                var section = SagePay.SageConfiguration.GetSection(CONFIG_TYPE);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(section.VendorName));
             }
         }

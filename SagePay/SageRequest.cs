@@ -9,13 +9,13 @@ namespace OrangeTentacle.SagePay
         public TransactionRequest Transaction { get; set; }
         public bool IsValid { get; protected set; }
 
-        public SageRequest(string configSection)
+        public SageRequest(SagePayFactory.ProviderTypes type)
         {
-            var config = SageConfiguration.GetSection(configSection);
+            var config = SageConfiguration.GetSection(type);
             Vendor = new VendorRequest(config.VendorName);
         }
 
-        public SageRequest(string vendorName, bool filler)
+        public SageRequest(string vendorName)
         {
             Vendor = new VendorRequest(vendorName);
         }

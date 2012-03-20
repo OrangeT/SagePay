@@ -70,6 +70,7 @@
     <Compile Include="SageConfiguration.cs" />
     <Compile Include="OfflineSageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SagePayFactory.cs" />
     <Compile Include="SampleCard.cs" />
     <Compile Include="SimulatorSageRequest.cs" />
     <Compile Include="TransactionAddress.cs" />
@@ -85,8 +86,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="App.config.sample" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.config.sample">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Examples\App.config.default">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Examples\App.config.live">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Examples\App.config.test">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Examples\App.config.simulator">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Examples\App.config.offline">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

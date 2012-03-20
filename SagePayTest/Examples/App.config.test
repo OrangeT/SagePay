@@ -4,7 +4,7 @@
 		<section name="SagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
 	</configSections>
 
-	<SagePay default="Offline">
+	<SagePay default="Test">
 		<add type="Offline" vendorName="SampleVendor" />
 		<add type="Simulator" vendorName="SampleVendor" />
 		<add type="Test" vendorName="SampleVendor" />

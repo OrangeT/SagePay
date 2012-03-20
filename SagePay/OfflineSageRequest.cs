@@ -5,12 +5,12 @@ namespace OrangeTentacle.SagePay
     public class OfflineSageRequest : SageRequest
     {
         public OfflineSageRequest() 
-            : base("OfflineSagePay")
+            : base(SagePayFactory.ProviderTypes.Offline)
         {
         }
 
         public OfflineSageRequest(string vendorName)
-            : base(vendorName, true)
+            : base(vendorName)
         {}
 
         public override TransactionResponse Send()

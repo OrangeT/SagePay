@@ -10,14 +10,14 @@ namespace OrangeTentacle.SagePay
     {
         public string Url { get; protected set; }
 
-        public WebSageRequest(string section, string url)
-            : base(section)
+        public WebSageRequest(SagePayFactory.ProviderTypes type, string url)
+            : base(type)
         {
             Url = url;
         }
 
         public WebSageRequest(string vendorName, string url, bool filler)
-            : base (vendorName, true)
+            : base (vendorName)
         {
             Url = url;
         }

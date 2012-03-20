@@ -14,7 +14,7 @@ namespace OrangeTentacle.SagePayTest
             public void ConfigureFromConfig()
             {
                 var request = new SagePay.OfflineSageRequest();
-                var section = SagePay.SageConfiguration.GetSection(SageConfiguration.CONFIG_SECTION);
+                var section = SagePay.SageConfiguration.GetSection(SagePay.SagePayFactory.ProviderTypes.Offline);
 
 
                 Assert.AreEqual(section.VendorName, request.Vendor.VendorName);

@@ -48,6 +48,7 @@
     <Compile Include="OfflineSageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SageException.cs" />
+    <Compile Include="SagePayFactory.cs" />
     <Compile Include="SageRequest.cs" />
     <Compile Include="SimulatorSageRequest.cs" />
     <Compile Include="TestSageRequest.cs" />
