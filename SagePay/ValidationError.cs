@@ -8,7 +8,7 @@ namespace OrangeTentacle.SagePay
         public string Field { get; set; }
         public string Message { get; set; }
 
-        public string PrettyPrint(IEnumerable<ValidationError> errors)
+        public static string PrettyPrint(IEnumerable<ValidationError> errors)
         {
             var sb = new StringBuilder();
             foreach(var error in errors)
