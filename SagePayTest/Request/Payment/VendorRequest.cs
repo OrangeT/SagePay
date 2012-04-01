@@ -1,7 +1,8 @@
 using System.Configuration;
 using MbUnit.Framework;
+using OrangeTentacle.SagePayTest.Configuration;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class VendorRequest

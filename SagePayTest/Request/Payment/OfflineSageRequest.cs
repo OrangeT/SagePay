@@ -4,7 +4,7 @@ using OrangeTentacle.SagePay;
 using OrangeTentacle.SagePay.Request.Payment;
 using OrangeTentacle.SagePay.Configuration;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class OfflineSageRequest

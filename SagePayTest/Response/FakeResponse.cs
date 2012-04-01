@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Response
 {
     [TestFixture]
     public class FakeResponse

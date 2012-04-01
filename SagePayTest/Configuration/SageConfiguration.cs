@@ -1,7 +1,7 @@
 using MbUnit.Framework;
 using OrangeTentacle.SagePay;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Configuration
 {
     [TestFixture]
     public class SageConfiguration

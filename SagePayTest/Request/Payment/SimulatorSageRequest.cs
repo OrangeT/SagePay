@@ -1,6 +1,6 @@
 using MbUnit.Framework;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class SimulatorSageRequest

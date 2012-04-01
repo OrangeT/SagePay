@@ -1,7 +1,7 @@
 using System.Linq;
 using MbUnit.Framework;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request
 {
     [TestFixture]
     public class TransactionAddress

@@ -1,6 +1,6 @@
 using MbUnit.Framework;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Response
 {
     [TestFixture]
     public class TransactionResponse

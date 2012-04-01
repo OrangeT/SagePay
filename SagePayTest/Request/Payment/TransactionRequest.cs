@@ -4,7 +4,7 @@ using MbUnit.Framework;
 using OrangeTentacle.SagePay.Request;
 using OrangeTentacle.SagePay.Request.Payment;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class TransactionRequest

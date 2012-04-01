@@ -1,6 +1,6 @@
 using MbUnit.Framework;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Sugar
 {
     [TestFixture]
     public class Luhn

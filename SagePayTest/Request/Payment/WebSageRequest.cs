@@ -3,8 +3,10 @@ using System.Collections.Specialized;
 using System.Linq;
 using MbUnit.Framework;
 using OrangeTentacle.SagePay.Request.Payment;
+using OrangeTentacle.SagePayTest.Configuration;
+using OrangeTentacle.SagePayTest.Response;
 
-namespace OrangeTentacle.SagePayTest
+namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class WebSageRequest
