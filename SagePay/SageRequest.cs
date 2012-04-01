@@ -1,37 +1,44 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OrangeTentacle.SagePay
 {
-    public abstract class SageRequest
+    public abstract class SageRequest : BaseSageRequest
     {
-        public VendorRequest Vendor { get; private set; }
         public TransactionRequest Transaction { get; set; }
-        public bool IsValid { get; protected set; }
 
         public SageRequest(SagePayFactory.ProviderTypes type)
-        {
-            var config = SageConfiguration.GetSection(type);
-            Vendor = new VendorRequest(config.VendorName);
-        }
+            : base(type)
+        {}
 
         public SageRequest(string vendorName)
-        {
-            Vendor = new VendorRequest(vendorName);
-        }
+            : base(vendorName)
+        {}
 
         public List<ValidationError> Validate()
         {
-            IsValid = false; // Guilty until proven innocent.
-
-            if (Transaction == null)
-                throw new SageException("No Transaction Set");
-
-            var errors = Transaction.Validate();
-            IsValid = !errors.Any();
-            return errors;
+            return Validate(Transaction, out _isValid);
         }
 
         public abstract TransactionResponse Send();
     }
+
+    //public abstract class SageRefundRequest : BaseSageRequest
+    //{
+    //    public RefundRequest Transaction { get; set; }
+
+    //    public SageRefundRequest(SagePayFactory.ProviderTypes type)
+    //        : base(type)
+    //    {}
+
+    //    public SageRefundRequest(string vendorName)
+    //        : base(vendorName)
+    //    {}
+
+    //    public List<ValidationError> Validate()
+    //    {
+    //        return Validate(Transaction, out _isValid);
+    //    }
+
+    //    public abstract RefundResponse Send();
+    //}
 }

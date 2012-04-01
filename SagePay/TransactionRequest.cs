@@ -4,7 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace OrangeTentacle.SagePay
 {
-    public class TransactionRequest
+    public interface IValidate
+    {
+        List<ValidationError> Validate();
+    }
+
+    public class TransactionRequest : IValidate
     {
         public string VPSProtocol { get { return "2.23"; } }
         public PaymentType TxType { get; set; }

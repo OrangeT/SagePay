@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseSageRequest.cs" />
     <Compile Include="CardType.cs" />
     <Compile Include="LiveSageRequest.cs" />
     <Compile Include="Luhn.cs" />
