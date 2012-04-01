@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Linq;
+using OrangeTentacle.SagePay.Response;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request.Payment
 {
     public class WebSageRequest : SageRequest
     {
         public string Url { get; protected set; }
 
-        public WebSageRequest(SagePayFactory.ProviderTypes type, string url)
+        public WebSageRequest(ProviderTypes type, string url)
             : base(type)
         {
             Url = url;
@@ -76,43 +77,43 @@ namespace OrangeTentacle.SagePay
                 collection.Add(values[0].Trim(), values[1].Trim());
             }
 
-            response.Status = EnumFromString<TransactionResponse.ResponseStatus>(collection["Status"]);
+            response.Status = EnumFromString<ResponseStatus>(collection["Status"]);
             response.StatusDetail = collection["StatusDetail"];
 
-            if (response.Status == TransactionResponse.ResponseStatus.Invalid ||
-                response.Status == TransactionResponse.ResponseStatus.Error)
+            if (response.Status == ResponseStatus.Invalid ||
+                response.Status == ResponseStatus.Error)
                 return response;
 
-            if (response.Status == TransactionResponse.ResponseStatus.OK)
+            if (response.Status == ResponseStatus.OK)
                 response.TxAuthNo = long.Parse(collection["TxAuthNo"]);
 
-            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth)
+            if (response.Status != ResponseStatus.ThreeDAuth)
                 response.VPSTxId = collection["VPSTxId"];
 
-            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth &&
-                response.Status != TransactionResponse.ResponseStatus.Ppredirect)
+            if (response.Status != ResponseStatus.ThreeDAuth &&
+                response.Status != ResponseStatus.Ppredirect)
                 response.SecurityKey = collection["SecurityKey"];
 
-            if (response.Status != TransactionResponse.ResponseStatus.ThreeDAuth &&
-                response.Status != TransactionResponse.ResponseStatus.Authenticated &&
-                response.Status != TransactionResponse.ResponseStatus.Registered &&
-                response.Status != TransactionResponse.ResponseStatus.Ppredirect)
+            if (response.Status != ResponseStatus.ThreeDAuth &&
+                response.Status != ResponseStatus.Authenticated &&
+                response.Status != ResponseStatus.Registered &&
+                response.Status != ResponseStatus.Ppredirect)
             {
 
-                response.AVSCV2 = EnumFromString<TransactionResponse.CV2Status>(collection["AVSCV2"]);
-                response.AddressResult = EnumFromString<TransactionResponse.MatchStatus>(collection["AddressResult"]);
-                response.PostCodeResult = EnumFromString<TransactionResponse.MatchStatus>(collection["PostCodeResult"]);
-                response.CV2Result = EnumFromString<TransactionResponse.MatchStatus>(collection["CV2Result"]);
+                response.AVSCV2 = EnumFromString<CV2Status>(collection["AVSCV2"]);
+                response.AddressResult = EnumFromString<MatchStatus>(collection["AddressResult"]);
+                response.PostCodeResult = EnumFromString<MatchStatus>(collection["PostCodeResult"]);
+                response.CV2Result = EnumFromString<MatchStatus>(collection["CV2Result"]);
             }
 
             // Doc state that if not enabled, should return "NOTCHECKED"
             // Nothing being returned from simulator - therefore default response.
-            response.ThreeDSecure = TransactionResponse.ThreeDSecureStatus.NotChecked;
+            response.ThreeDSecure = ThreeDSecureStatus.NotChecked;
             if (collection.ContainsKey("3DSecureStatus"))
-                response.ThreeDSecure = EnumFromString<TransactionResponse.ThreeDSecureStatus>(collection["3DSecureStatus"]);
+                response.ThreeDSecure = EnumFromString<ThreeDSecureStatus>(collection["3DSecureStatus"]);
 
-            if (response.ThreeDSecure == TransactionResponse.ThreeDSecureStatus.OK &&
-                response.Status == TransactionResponse.ResponseStatus.OK)
+            if (response.ThreeDSecure == ThreeDSecureStatus.OK &&
+                response.Status == ResponseStatus.OK)
                 response.Caav = collection["CAVV"];
 
             return response;

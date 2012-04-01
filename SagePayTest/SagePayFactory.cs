@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using MbUnit.Framework;
-using OrangeTentacle.SagePay;
+using OrangeTentacle.SagePay.Request.Payment;
 
 namespace OrangeTentacle.SagePayTest
 {
@@ -15,30 +15,30 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void Live()
             {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.SagePayFactory.ProviderTypes.Live);
+                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Live);
 
-                Assert.IsInstanceOfType(typeof(SagePay.LiveSageRequest), provider);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.LiveSageRequest), provider);
             }
 
             [Test]
             public void Test()
             {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.SagePayFactory.ProviderTypes.Test);
-                Assert.IsInstanceOfType(typeof(SagePay.TestSageRequest), provider);
+                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Test);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.TestSageRequest), provider);
             }
 
             [Test]
             public void Simulator()
             {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.SagePayFactory.ProviderTypes.Simulator);
-                Assert.IsInstanceOfType(typeof(SagePay.SimulatorSageRequest), provider);
+                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Simulator);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.SimulatorSageRequest), provider);
             }
 
             [Test]
             public void Offline()
             {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.SagePayFactory.ProviderTypes.Offline);
-                Assert.IsInstanceOfType(typeof(SagePay.OfflineSageRequest), provider);
+                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Offline);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
             }
         }
 
@@ -70,35 +70,35 @@ namespace OrangeTentacle.SagePayTest
                 // Where multiple providers exist, and no default specified, 
                 // return the first in the list
                 var provider = SagePay.SagePayFactory.Fetch(DEFAULT_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.OfflineSageRequest), provider);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
             }
 
             [Test]
             public void Live()
             {
                 var provider = SagePay.SagePayFactory.Fetch(LIVE_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.LiveSageRequest), provider);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.LiveSageRequest), provider);
             }
 
             [Test]
             public void Test()
             {
                 var provider = SagePay.SagePayFactory.Fetch(TEST_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.TestSageRequest), provider);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.TestSageRequest), provider);
             }
 
             [Test]
             public void Simulator()
             {
                 var provider = SagePay.SagePayFactory.Fetch(SIMULATOR_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.SimulatorSageRequest), provider);                
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.SimulatorSageRequest), provider);                
             }
 
             [Test]
             public void Offline()
             {
                 var provider = SagePay.SagePayFactory.Fetch(OFFLINE_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.OfflineSageRequest), provider);
+                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
             }
         }
     

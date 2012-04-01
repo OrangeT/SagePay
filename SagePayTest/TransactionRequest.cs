@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using MbUnit.Framework;
-using OrangeTentacle.SagePay;
+using OrangeTentacle.SagePay.Request;
+using OrangeTentacle.SagePay.Request.Payment;
 
 namespace OrangeTentacle.SagePayTest
 {
@@ -219,9 +220,9 @@ namespace OrangeTentacle.SagePayTest
             }
         }
 
-        public static SagePay.TransactionRequest SampleRequest()
+        public static SagePay.Request.Payment.TransactionRequest SampleRequest()
         {
-            var request = new SagePay.TransactionRequest();
+            var request = new SagePay.Request.Payment.TransactionRequest();
 
             request.VendorTxCode = Guid.NewGuid().ToString();
             request.Amount = 100;

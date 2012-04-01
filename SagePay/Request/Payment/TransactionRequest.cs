@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using OrangeTentacle.SagePay.Sugar;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request.Payment
 {
     public interface IValidate
     {

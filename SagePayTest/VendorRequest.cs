@@ -14,7 +14,7 @@ namespace OrangeTentacle.SagePayTest
             public void Valid()
             {
                 var name = "bob";
-                var vendor = new OrangeTentacle.SagePay.VendorRequest(name);
+                var vendor = new SagePay.Request.VendorRequest(name);
                 Assert.AreEqual(vendor.VendorName, name);
             }
 
@@ -23,14 +23,14 @@ namespace OrangeTentacle.SagePayTest
             public void EmptyIsNotValid()
             {
                 var name = string.Empty;
-                var vendor = new OrangeTentacle.SagePay.VendorRequest(name);
+                var vendor = new SagePay.Request.VendorRequest(name);
             }
         }
 
-        public static SagePay.VendorRequest SampleRequest()
+        public static SagePay.Request.VendorRequest SampleRequest()
         {
-            var name = SagePay.SageConfiguration.GetSection(SageConfiguration.CONFIG_TYPE).VendorName;
-            var request = new SagePay.VendorRequest(name);
+            var name = SagePay.Configuration.SageConfiguration.GetSection(SageConfiguration.CONFIG_TYPE).VendorName;
+            var request = new SagePay.Request.VendorRequest(name);
 
             return request;
         }

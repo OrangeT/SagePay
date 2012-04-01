@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using OrangeTentacle.SagePay.Configuration;
+using OrangeTentacle.SagePay.Request.Payment;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request
 {
     public abstract class BaseSageRequest
     {
@@ -15,7 +17,7 @@ namespace OrangeTentacle.SagePay
             protected set { _isValid = value; }
         }
 
-        public BaseSageRequest(SagePayFactory.ProviderTypes type)
+        public BaseSageRequest(ProviderTypes type)
         {
             var config = SageConfiguration.GetSection(type);
             Vendor = new VendorRequest(config.VendorName);

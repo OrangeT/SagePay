@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request
 {
     public class TransactionAddress
     {

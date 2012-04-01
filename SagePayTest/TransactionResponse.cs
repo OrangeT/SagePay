@@ -11,17 +11,17 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void StatusOk()
             {
-                var response = new SagePay.TransactionResponse();
-                response.Status = SagePay.TransactionResponse.ResponseStatus.OK;
+                var response = new SagePay.Response.TransactionResponse();
+                response.Status = SagePay.Response.ResponseStatus.OK;
 
                 Assert.IsTrue(response.IsValid());
             }
 
             [Test]
-            public void StatusElse([EnumData(typeof(SagePay.TransactionResponse.ResponseStatus), 
-                Exclude = SagePay.TransactionResponse.ResponseStatus.OK)] SagePay.TransactionResponse.ResponseStatus status)
+            public void StatusElse([EnumData(typeof(SagePay.Response.ResponseStatus), 
+                Exclude = SagePay.Response.ResponseStatus.OK)] SagePay.Response.ResponseStatus status)
             {
-                var response = new SagePay.TransactionResponse();
+                var response = new SagePay.Response.TransactionResponse();
                 response.Status = status;
 
                 Assert.IsFalse(response.IsValid());

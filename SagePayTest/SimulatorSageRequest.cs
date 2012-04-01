@@ -12,7 +12,7 @@ namespace OrangeTentacle.SagePayTest
             [Repeat(100)]
             public void AValidTransactionReturnsAValidResponse()
             {
-                var request = new SagePay.SimulatorSageRequest();
+                var request = new SagePay.Request.Payment.SimulatorSageRequest();
                 request.Transaction = TransactionRequest.SampleRequest();
 
                 request.Validate();
@@ -21,11 +21,11 @@ namespace OrangeTentacle.SagePayTest
 
                 var validResponses = new[]
                                          {
-                                             SagePay.TransactionResponse.ResponseStatus.OK,
-                                             SagePay.TransactionResponse.ResponseStatus.Registered,
-                                             SagePay.TransactionResponse.ResponseStatus.NotAuthed,
-                                             SagePay.TransactionResponse.ResponseStatus.Rejected,
-                                             SagePay.TransactionResponse.ResponseStatus.Error
+                                             SagePay.Response.ResponseStatus.OK,
+                                             SagePay.Response.ResponseStatus.Registered,
+                                             SagePay.Response.ResponseStatus.NotAuthed,
+                                             SagePay.Response.ResponseStatus.Rejected,
+                                             SagePay.Response.ResponseStatus.Error
                                          };
 
                 Assert.Contains(validResponses, response.Status, 

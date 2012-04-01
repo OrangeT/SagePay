@@ -1,11 +1,12 @@
 using MbUnit.Framework;
+using OrangeTentacle.SagePay;
 
 namespace OrangeTentacle.SagePayTest
 {
     [TestFixture]
     public class SageConfiguration
     {
-        public const SagePay.SagePayFactory.ProviderTypes CONFIG_TYPE = SagePay.SagePayFactory.ProviderTypes.Offline;
+        public const ProviderTypes CONFIG_TYPE = ProviderTypes.Offline;
 
         [TestFixture]
         internal class VendorName
@@ -13,7 +14,7 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void FromConfigFile()
             {
-                var section = SagePay.SageConfiguration.GetSection(CONFIG_TYPE);
+                var section = SagePay.Configuration.SageConfiguration.GetSection(CONFIG_TYPE);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(section.VendorName));
             }
         }

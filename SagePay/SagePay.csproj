@@ -41,24 +41,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSageRequest.cs" />
-    <Compile Include="CardType.cs" />
-    <Compile Include="LiveSageRequest.cs" />
-    <Compile Include="Luhn.cs" />
-    <Compile Include="SageConfiguration.cs" />
-    <Compile Include="OfflineSageRequest.cs" />
+    <Compile Include="Configuration\SageProviderCollection.cs" />
+    <Compile Include="Configuration\SageProviderConfiguration.cs" />
+    <Compile Include="ProviderTypes.cs" />
+    <Compile Include="Request\BaseSageRequest.cs" />
+    <Compile Include="Request\CardType.cs" />
+    <Compile Include="Request\Payment\LiveSageRequest.cs" />
+    <Compile Include="Response\CV2Status.cs" />
+    <Compile Include="Response\MatchStatus.cs" />
+    <Compile Include="Response\ResponseStatus.cs" />
+    <Compile Include="Response\ThreeDSecureStatus.cs" />
+    <Compile Include="Sugar\Luhn.cs" />
+    <Compile Include="Configuration\SageConfiguration.cs" />
+    <Compile Include="Request\Payment\OfflineSageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SageException.cs" />
     <Compile Include="SagePayFactory.cs" />
-    <Compile Include="SageRequest.cs" />
-    <Compile Include="SimulatorSageRequest.cs" />
-    <Compile Include="TestSageRequest.cs" />
-    <Compile Include="TransactionAddress.cs" />
-    <Compile Include="TransactionRequest.cs" />
-    <Compile Include="TransactionResponse.cs" />
-    <Compile Include="ValidationError.cs" />
-    <Compile Include="VendorRequest.cs" />
-    <Compile Include="WebSageRequest.cs" />
+    <Compile Include="Request\Payment\SageRequest.cs" />
+    <Compile Include="Request\Payment\SimulatorSageRequest.cs" />
+    <Compile Include="Request\Payment\TestSageRequest.cs" />
+    <Compile Include="Request\TransactionAddress.cs" />
+    <Compile Include="Request\Payment\TransactionRequest.cs" />
+    <Compile Include="Response\TransactionResponse.cs" />
+    <Compile Include="Request\ValidationError.cs" />
+    <Compile Include="Request\VendorRequest.cs" />
+    <Compile Include="Request\Payment\WebSageRequest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Request\Refund\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

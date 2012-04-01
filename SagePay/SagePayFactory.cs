@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using OrangeTentacle.SagePay.Configuration;
+using OrangeTentacle.SagePay.Request.Payment;
 
 namespace OrangeTentacle.SagePay
 {
@@ -53,14 +55,6 @@ namespace OrangeTentacle.SagePay
                 default:
                     return string.IsNullOrEmpty(vendorName) ? new OfflineSageRequest() : new OfflineSageRequest(vendorName);
             }
-        }
-
-        public enum ProviderTypes
-        {
-            Live,
-            Test,
-            Simulator,
-            Offline
         }
     }
 }

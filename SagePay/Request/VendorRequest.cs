@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request
 {
     public class VendorRequest
     {

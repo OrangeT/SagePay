@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using OrangeTentacle.SagePay.Response;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request.Payment
 {
     public abstract class SageRequest : BaseSageRequest
     {
         public TransactionRequest Transaction { get; set; }
 
-        public SageRequest(SagePayFactory.ProviderTypes type)
+        public SageRequest(ProviderTypes type)
             : base(type)
         {}
 

@@ -1,9 +1,12 @@
 using System;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Sugar
 {
     public class Luhn
     {
+        /// <summary>
+        /// Performs a Luhn checksum on a credit/debit card number.
+        /// </summary>
         public static bool IsValid(string number)
         {
             var reversed = number.ToCharArray();

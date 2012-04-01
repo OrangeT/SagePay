@@ -79,9 +79,9 @@ namespace OrangeTentacle.SagePayTest
             }
         }
 
-        public static SagePay.TransactionAddress SampleAddress()
+        public static SagePay.Request.TransactionAddress SampleAddress()
         {
-            var address = new SagePay.TransactionAddress
+            var address = new SagePay.Request.TransactionAddress 
                               {
                                   Surname = "Ryan",
                                   Firstnames = "Kian Ronan",

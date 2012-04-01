@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using MbUnit.Framework;
-using OrangeTentacle.SagePay;
+using OrangeTentacle.SagePay.Request.Payment;
 
 namespace OrangeTentacle.SagePayTest
 {
@@ -24,14 +24,14 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void TakesAnEndPointAndSection()
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
+                var request = new SagePay.Request.Payment.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(request.Url));
             }
 
             [Test]
             public void TakesAnEndPointAndVendorName()
             {
-                var request = new SagePay.WebSageRequest("bob", TEST_URL, true);
+                var request = new SagePay.Request.Payment.WebSageRequest("bob", TEST_URL, true);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(request.Url));
             }
         }
@@ -43,7 +43,7 @@ namespace OrangeTentacle.SagePayTest
             [Factory(typeof(WebSageRequest), "REQUEST_FIELDS")]
             public void AllValuesInCollection(string key)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
+                var request = new SagePay.Request.Payment.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 var encode = request.Encode();
 
@@ -54,7 +54,7 @@ namespace OrangeTentacle.SagePayTest
             [Test]
             public void ExpiryDateFormat()
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
+                var request = new SagePay.Request.Payment.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 var encode = request.Encode();
                 
@@ -62,12 +62,12 @@ namespace OrangeTentacle.SagePayTest
             }
 
             [Test]
-            [Row(SagePay.TransactionRequest.PaymentType.AuthenticateOnly, "AUTHENTICATE ONLY")]
-            [Row(SagePay.TransactionRequest.PaymentType.Payment, "PAYMENT")]
-            [Row(SagePay.TransactionRequest.PaymentType.Deferred, "DEFERRED")]
-            public void TxTypeTypes(SagePay.TransactionRequest.PaymentType type, string expected)
+            [Row(SagePay.Request.Payment.TransactionRequest.PaymentType.AuthenticateOnly, "AUTHENTICATE ONLY")]
+            [Row(SagePay.Request.Payment.TransactionRequest.PaymentType.Payment, "PAYMENT")]
+            [Row(SagePay.Request.Payment.TransactionRequest.PaymentType.Deferred, "DEFERRED")]
+            public void TxTypeTypes(SagePay.Request.Payment.TransactionRequest.PaymentType type, string expected)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
+                var request = new SagePay.Request.Payment.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 request.Transaction.TxType = type;
                 var encode = request.Encode();
@@ -79,7 +79,7 @@ namespace OrangeTentacle.SagePayTest
             [EnumData(typeof(Currency))]
             public void CurrencyTypes(Currency currency)
             {
-                var request = new SagePay.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
+                var request = new SagePay.Request.Payment.WebSageRequest(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = TransactionRequest.SampleRequest();
                 request.Transaction.Currency = currency;
                 var encode = request.Encode();
@@ -95,7 +95,7 @@ namespace OrangeTentacle.SagePayTest
             public void AllFields()
             {
                 var response = new FakeTextResponse();
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(response.Collection["VPSProtocol"], decode.VPSProtocol);
                 Assert.AreEqual(response.Collection["Status"], decode.Status.ToString().ToUpper());
@@ -112,80 +112,80 @@ namespace OrangeTentacle.SagePayTest
             }
 
             [Test]
-            [EnumData(typeof(SagePay.TransactionResponse.ResponseStatus))]
-            public void ResponseStatusTypes(SagePay.TransactionResponse.ResponseStatus status)
+            [EnumData(typeof(SagePay.Response.ResponseStatus))]
+            public void ResponseStatusTypes(SagePay.Response.ResponseStatus status)
             {
                 var response = new FakeTextResponse();
                 response.Collection["Status"] = status.ToString().ToUpper();
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.Status);
             }
 
             [Test]
-            [Row(SagePay.TransactionResponse.CV2Status.AllMatch, "ALL MATCH")]
-            [Row(SagePay.TransactionResponse.CV2Status.SecurityCodeMatchOnly, "SECURITY CODE MATCH ONLY")]
-            [Row(SagePay.TransactionResponse.CV2Status.AddressMatchOnly, "ADDRESS MATCH ONLY")]
-            [Row(SagePay.TransactionResponse.CV2Status.NoDataMatches, "NO DATA MATCHES")]
-            [Row(SagePay.TransactionResponse.CV2Status.DataNotChecked, "DATA NOT CHECKED")]
-            public void AVSCV2Types(SagePay.TransactionResponse.CV2Status status, string code)
+            [Row(SagePay.Response.CV2Status.AllMatch, "ALL MATCH")]
+            [Row(SagePay.Response.CV2Status.SecurityCodeMatchOnly, "SECURITY CODE MATCH ONLY")]
+            [Row(SagePay.Response.CV2Status.AddressMatchOnly, "ADDRESS MATCH ONLY")]
+            [Row(SagePay.Response.CV2Status.NoDataMatches, "NO DATA MATCHES")]
+            [Row(SagePay.Response.CV2Status.DataNotChecked, "DATA NOT CHECKED")]
+            public void AVSCV2Types(SagePay.Response.CV2Status status, string code)
             {
                 var response = new FakeTextResponse();
                 response.Collection["AVSCV2"] = code;
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.AVSCV2);
             }
 
             [Test]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotProvided, "NOT PROVIDED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotChecked, "NOT CHECKED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.Matched, "MATCHED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotMatched, "NOT MATCHED")]
-            public void AddressResultTypes(SagePay.TransactionResponse.MatchStatus status, string code)
+            [Row(SagePay.Response.MatchStatus.NotProvided, "NOT PROVIDED")]
+            [Row(SagePay.Response.MatchStatus.NotChecked, "NOT CHECKED")]
+            [Row(SagePay.Response.MatchStatus.Matched, "MATCHED")]
+            [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
+            public void AddressResultTypes(SagePay.Response.MatchStatus status, string code)
             {
                 var response = new FakeTextResponse();
                 response.Collection["AddressResult"] = code;
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.AddressResult);
             }
 
             [Test]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotProvided, "NOT PROVIDED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotChecked, "NOT CHECKED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.Matched, "MATCHED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotMatched, "NOT MATCHED")]
-            public void PostCodeResultTypes(SagePay.TransactionResponse.MatchStatus status, string code)
+            [Row(SagePay.Response.MatchStatus.NotProvided, "NOT PROVIDED")]
+            [Row(SagePay.Response.MatchStatus.NotChecked, "NOT CHECKED")]
+            [Row(SagePay.Response.MatchStatus.Matched, "MATCHED")]
+            [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
+            public void PostCodeResultTypes(SagePay.Response.MatchStatus status, string code)
             {
                 var response = new FakeTextResponse();
                 response.Collection["PostCodeResult"] = code;
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.PostCodeResult);
             }
 
             [Test]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotProvided, "NOT PROVIDED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotChecked, "NOT CHECKED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.Matched, "MATCHED")]
-            [Row(SagePay.TransactionResponse.MatchStatus.NotMatched, "NOT MATCHED")]
-            public void CV2ResultTypes(SagePay.TransactionResponse.MatchStatus status, string code)
+            [Row(SagePay.Response.MatchStatus.NotProvided, "NOT PROVIDED")]
+            [Row(SagePay.Response.MatchStatus.NotChecked, "NOT CHECKED")]
+            [Row(SagePay.Response.MatchStatus.Matched, "MATCHED")]
+            [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
+            public void CV2ResultTypes(SagePay.Response.MatchStatus status, string code)
             {
                 var response = new FakeTextResponse();
                 response.Collection["CV2Result"] = code;
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.CV2Result);
             }
 
             [Test]
-            [EnumData(typeof(SagePay.TransactionResponse.ThreeDSecureStatus))]
-            public void ThreeDSecureTypes(SagePay.TransactionResponse.ThreeDSecureStatus status)
+            [EnumData(typeof(SagePay.Response.ThreeDSecureStatus))]
+            public void ThreeDSecureTypes(SagePay.Response.ThreeDSecureStatus status)
             {
                 var response = new FakeTextResponse();
                 response.Collection["3DSecureStatus"] = status.ToString().ToUpper();
-                var decode = SagePay.WebSageRequest.Decode(response.Write());
+                var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(status, decode.ThreeDSecure);
             }

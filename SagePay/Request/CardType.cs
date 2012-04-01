@@ -1,4 +1,4 @@
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request
 {
     public enum CardType
     {

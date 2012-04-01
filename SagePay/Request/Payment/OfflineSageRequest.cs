@@ -1,11 +1,12 @@
 ﻿using System;
+using OrangeTentacle.SagePay.Response;
 
-namespace OrangeTentacle.SagePay
+namespace OrangeTentacle.SagePay.Request.Payment
 {
     public class OfflineSageRequest : SageRequest
     {
         public OfflineSageRequest() 
-            : base(SagePayFactory.ProviderTypes.Offline)
+            : base(ProviderTypes.Offline)
         {
         }
 
