@@ -1,6 +1,6 @@
 namespace OrangeTentacle.SagePay.Response
 {
-    public class TransactionResponse
+    public class PaymentResponse
     {
         public string VPSProtocol { get { return "2.23"; } }
         public ResponseStatus Status { get; set; }

@@ -51,7 +51,7 @@ To make a payment:
 var request = SagePayFactory.Payment.Fetch(); // Load default type
 request = SagePayFactory.Payment.Fetch(ProviderTypes.Live); // Load live type
 
-request.Transaction = new TransactionRequest(); // You may want to populate the transaction
+request.Transaction = new PaymentRequest(); // You may want to populate the transaction
 
 request.Validate(); // Non validated transactions will throw on send.
 
@@ -71,9 +71,3 @@ request.Validate(); // Non validated transactions will throw on send.
 
 var response = request.Send();
 ```
-
-
-Todo
---
-* Refund types incorporate "Refund" in to type, where Payment types are still bare.  This causes
-  ambiguity.  Change payment type names to incorporate word "Payment".

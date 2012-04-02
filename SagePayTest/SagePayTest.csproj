@@ -74,16 +74,16 @@
     <Compile Include="Response\RefundResponse.cs" />
     <Compile Include="Sugar\Luhn.cs" />
     <Compile Include="Configuration\SageConfiguration.cs" />
-    <Compile Include="Request\Payment\OfflineSageRequest.cs" />
+    <Compile Include="Request\Payment\OfflineSagePayment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SagePayFactory.cs" />
     <Compile Include="SampleCard.cs" />
-    <Compile Include="Request\Payment\SimulatorSageRequest.cs" />
+    <Compile Include="Request\Payment\SimulatorSagePayment.cs" />
     <Compile Include="Request\TransactionAddress.cs" />
-    <Compile Include="Request\Payment\TransactionRequest.cs" />
+    <Compile Include="Request\Payment\PaymentRequest.cs" />
     <Compile Include="Response\TransactionResponse.cs" />
-    <Compile Include="Request\Payment\VendorRequest.cs" />
-    <Compile Include="Request\Payment\WebSageRequest.cs" />
+    <Compile Include="Request\VendorRequest.cs" />
+    <Compile Include="Request\Payment\WebSagepayment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SagePay\SagePay.csproj">

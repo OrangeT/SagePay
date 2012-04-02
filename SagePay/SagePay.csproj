@@ -48,7 +48,7 @@
     <Compile Include="Request\CardType.cs" />
     <Compile Include="Request\IValidate.cs" />
     <Compile Include="Request\Currency.cs" />
-    <Compile Include="Request\Payment\LiveSageRequest.cs" />
+    <Compile Include="Request\Payment\LiveSagePayment.cs" />
     <Compile Include="Request\Refund\LiveSageRefund.cs" />
     <Compile Include="Request\Refund\OfflineSageRefund.cs" />
     <Compile Include="Request\Refund\RefundRequest.cs" />
@@ -64,19 +64,19 @@
     <Compile Include="Response\ThreeDSecureStatus.cs" />
     <Compile Include="Sugar\Luhn.cs" />
     <Compile Include="Configuration\SageConfiguration.cs" />
-    <Compile Include="Request\Payment\OfflineSageRequest.cs" />
+    <Compile Include="Request\Payment\OfflineSagePayment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SageException.cs" />
     <Compile Include="SagePayFactory.cs" />
-    <Compile Include="Request\Payment\SageRequest.cs" />
-    <Compile Include="Request\Payment\SimulatorSageRequest.cs" />
-    <Compile Include="Request\Payment\TestSageRequest.cs" />
+    <Compile Include="Request\Payment\SagePayment.cs" />
+    <Compile Include="Request\Payment\SimulatorSagePayment.cs" />
+    <Compile Include="Request\Payment\TestSagePayment.cs" />
     <Compile Include="Request\TransactionAddress.cs" />
-    <Compile Include="Request\Payment\TransactionRequest.cs" />
-    <Compile Include="Response\TransactionResponse.cs" />
+    <Compile Include="Request\Payment\PaymentRequest.cs" />
+    <Compile Include="Response\PaymentResponse.cs" />
     <Compile Include="Request\ValidationError.cs" />
     <Compile Include="Request\VendorRequest.cs" />
-    <Compile Include="Request\Payment\WebSageRequest.cs" />
+    <Compile Include="Request\Payment\WebSagePayment.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

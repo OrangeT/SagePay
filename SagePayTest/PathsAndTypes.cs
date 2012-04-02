@@ -45,11 +45,11 @@ namespace OrangeTentacle.SagePayTest
         public static List<PathMapping> GetFiles()
         {
             var list = new List<PathMapping>();
-            list.Add(new PathMapping("App.config.default", typeof (OfflineSageRequest), typeof (OfflineSageRefund)));
-            list.Add(new PathMapping("App.config.live", typeof (LiveSageRequest), typeof (LiveSageRefund)));
-            list.Add(new PathMapping("App.config.test", typeof (TestSageRequest), typeof (TestSageRefund)));
-            list.Add(new PathMapping("App.config.simulator", typeof (SimulatorSageRequest), typeof (SimulatorSageRefund)));
-            list.Add(new PathMapping("App.config.offline", typeof (OfflineSageRequest), typeof (OfflineSageRefund)));
+            list.Add(new PathMapping("App.config.default", typeof (OfflineSagePayment), typeof (OfflineSageRefund)));
+            list.Add(new PathMapping("App.config.live", typeof (LiveSagePayment), typeof (LiveSageRefund)));
+            list.Add(new PathMapping("App.config.test", typeof (TestSagePayment), typeof (TestSageRefund)));
+            list.Add(new PathMapping("App.config.simulator", typeof (SimulatorSagePayment), typeof (SimulatorSageRefund)));
+            list.Add(new PathMapping("App.config.offline", typeof (OfflineSagePayment), typeof (OfflineSageRefund)));
             return list;
         }
 
@@ -57,15 +57,15 @@ namespace OrangeTentacle.SagePayTest
         public static List<ProviderMapping> GetProviders()
         {
             var list = new List<ProviderMapping>();
-            list.Add(new ProviderMapping(ProviderTypes.Live, typeof(LiveSageRequest), typeof(LiveSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Test, typeof(TestSageRequest), typeof(TestSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Simulator, typeof(SimulatorSageRequest), typeof(SimulatorSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Offline, typeof(OfflineSageRequest), typeof(OfflineSageRefund)));
+            list.Add(new ProviderMapping(ProviderTypes.Live, typeof(LiveSagePayment), typeof(LiveSageRefund)));
+            list.Add(new ProviderMapping(ProviderTypes.Test, typeof(TestSagePayment), typeof(TestSageRefund)));
+            list.Add(new ProviderMapping(ProviderTypes.Simulator, typeof(SimulatorSagePayment), typeof(SimulatorSageRefund)));
+            list.Add(new ProviderMapping(ProviderTypes.Offline, typeof(OfflineSagePayment), typeof(OfflineSageRefund)));
             return list;
         }
 
         [Test]
-        [Factory("FilepathsAndTypes")]
+        [Factory("GetFiles")]
         public void TestFilesExist(PathMapping mapping)
         {
             Assert.IsTrue(File.Exists(mapping.FileName));

@@ -7,7 +7,7 @@ using OrangeTentacle.SagePay.Request.Payment;
 namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
-    public class TransactionRequest
+    public class PaymentRequest
     {
         [TestFixture]
         internal class Validate
@@ -220,9 +220,9 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             }
         }
 
-        public static SagePay.Request.Payment.TransactionRequest SampleRequest()
+        public static SagePay.Request.Payment.PaymentRequest SampleRequest()
         {
-            var request = new SagePay.Request.Payment.TransactionRequest();
+            var request = new SagePay.Request.Payment.PaymentRequest();
 
             request.VendorTxCode = Guid.NewGuid().ToString();
             request.Amount = 100;

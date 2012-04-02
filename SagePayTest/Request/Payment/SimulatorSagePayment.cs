@@ -4,7 +4,7 @@ using OrangeTentacle.SagePay.Response;
 namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
-    public class SimulatorSageRequest
+    public class SimulatorSagePayment
     {
 
         public static readonly ResponseStatus[] ValidResponses = new[]
@@ -23,8 +23,8 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Repeat(100)]
             public void AValidTransactionReturnsAValidResponse()
             {
-                var request = new SagePay.Request.Payment.SimulatorSageRequest();
-                request.Transaction = TransactionRequest.SampleRequest();
+                var request = new SagePay.Request.Payment.SimulatorSagePayment();
+                request.Payment = PaymentRequest.SampleRequest();
 
                 request.Validate();
 

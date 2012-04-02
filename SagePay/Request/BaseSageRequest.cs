@@ -33,7 +33,7 @@ namespace OrangeTentacle.SagePay.Request
             IsValid = false; // Guilty until proven innocent.
 
             if (toValidate == null)
-                throw new SageException("No Transaction Set");
+                throw new SageException("No Payment Set");
 
             var errors = toValidate.Validate();
             IsValid = !errors.Any();

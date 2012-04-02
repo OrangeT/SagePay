@@ -7,17 +7,17 @@ using OrangeTentacle.SagePay.Response;
 
 namespace OrangeTentacle.SagePay.Request.Payment
 {
-    public class WebSageRequest : SageRequest
+    public class WebSagePayment : SagePayment
     {
         public string Url { get; protected set; }
 
-        public WebSageRequest(ProviderTypes type, string url)
+        public WebSagePayment(ProviderTypes type, string url)
             : base(type)
         {
             Url = url;
         }
 
-        public WebSageRequest(string vendorName, string url, bool filler)
+        public WebSagePayment(string vendorName, string url, bool filler)
             : base (vendorName)
         {
             Url = url;
@@ -27,43 +27,43 @@ namespace OrangeTentacle.SagePay.Request.Payment
         {
             var collection = new NameValueCollection();
 
-            collection.Add("VPSProtocol", Transaction.VPSProtocol);
+            collection.Add("VPSProtocol", Payment.VPSProtocol);
 
-            if (Transaction.TxType == TransactionRequest.PaymentType.AuthenticateOnly)
+            if (Payment.TxType == PaymentRequest.PaymentType.AuthenticateOnly)
                 collection.Add("TxType", "AUTHENTICATE ONLY");
-            if (Transaction.TxType == TransactionRequest.PaymentType.Deferred)
+            if (Payment.TxType == PaymentRequest.PaymentType.Deferred)
                 collection.Add("TxType", "DEFERRED");
-            if (Transaction.TxType == TransactionRequest.PaymentType.Payment)
+            if (Payment.TxType == PaymentRequest.PaymentType.Payment)
                 collection.Add("TxType", "PAYMENT");
 
             collection.Add("Vendor", Vendor.VendorName);
-            collection.Add("VendorTxCode", Transaction.VendorTxCode);
-            collection.Add("Amount", Transaction.Amount.ToString());
-            collection.Add("Currency", Transaction.Currency.ToString().ToUpper());
-            collection.Add("Description", Transaction.Description);
-            collection.Add("CardHolder", Transaction.CardHolderName);
-            collection.Add("CardNumber", Transaction.CardNumber);
-            collection.Add("ExpiryDate", Transaction.ExpiryDate.ToString("MMyy"));
-            collection.Add("CV2", Transaction.CV2);
-            collection.Add("CardType", Transaction.CardType.ToString());
-            collection.Add("BillingSurname", Transaction.Billing.Surname);
-            collection.Add("BillingFirstnames", Transaction.Billing.Firstnames);
-            collection.Add("BillingAddress1", Transaction.Billing.Address1);
-            collection.Add("BillingCity", Transaction.Billing.City);
-            collection.Add("BillingPostCode", Transaction.Billing.PostCode);
-            collection.Add("BillingCountry", Transaction.Billing.Country);
-            collection.Add("DeliverySurname", Transaction.Delivery.Surname);
-            collection.Add("DeliveryFirstnames", Transaction.Delivery.Firstnames);
-            collection.Add("DeliveryAddress1", Transaction.Delivery.Address1);
-            collection.Add("DeliveryCity", Transaction.Delivery.City);
-            collection.Add("DeliveryPostCode", Transaction.Delivery.PostCode);
-            collection.Add("DeliveryCountry", Transaction.Delivery.Country);
+            collection.Add("VendorTxCode", Payment.VendorTxCode);
+            collection.Add("Amount", Payment.Amount.ToString());
+            collection.Add("Currency", Payment.Currency.ToString().ToUpper());
+            collection.Add("Description", Payment.Description);
+            collection.Add("CardHolder", Payment.CardHolderName);
+            collection.Add("CardNumber", Payment.CardNumber);
+            collection.Add("ExpiryDate", Payment.ExpiryDate.ToString("MMyy"));
+            collection.Add("CV2", Payment.CV2);
+            collection.Add("CardType", Payment.CardType.ToString());
+            collection.Add("BillingSurname", Payment.Billing.Surname);
+            collection.Add("BillingFirstnames", Payment.Billing.Firstnames);
+            collection.Add("BillingAddress1", Payment.Billing.Address1);
+            collection.Add("BillingCity", Payment.Billing.City);
+            collection.Add("BillingPostCode", Payment.Billing.PostCode);
+            collection.Add("BillingCountry", Payment.Billing.Country);
+            collection.Add("DeliverySurname", Payment.Delivery.Surname);
+            collection.Add("DeliveryFirstnames", Payment.Delivery.Firstnames);
+            collection.Add("DeliveryAddress1", Payment.Delivery.Address1);
+            collection.Add("DeliveryCity", Payment.Delivery.City);
+            collection.Add("DeliveryPostCode", Payment.Delivery.PostCode);
+            collection.Add("DeliveryCountry", Payment.Delivery.Country);
             return collection;
         }
 
-        public static TransactionResponse Decode(string input)
+        public static PaymentResponse Decode(string input)
         {
-            var response = new TransactionResponse();
+            var response = new PaymentResponse();
             var collection = WebHelper.SplitResponse(input);
 
             response.Status = WebHelper.EnumFromString<ResponseStatus>(collection["Status"]);
@@ -109,7 +109,7 @@ namespace OrangeTentacle.SagePay.Request.Payment
 
         }
 
-        public override TransactionResponse Send()
+        public override PaymentResponse Send()
         {
             if (!IsValid)
                 throw new SageException("Configuration Must Be Valid");

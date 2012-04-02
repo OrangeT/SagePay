@@ -18,7 +18,7 @@ namespace OrangeTentacle.SagePayTest
                 public void Default()
                 {
                     var provider = SagePay.SagePayFactory.Payment.Fetch();
-                    Assert.IsInstanceOfType<OfflineSageRequest>(provider);
+                    Assert.IsInstanceOfType<OfflineSagePayment>(provider);
                 }
 
                 [Test]

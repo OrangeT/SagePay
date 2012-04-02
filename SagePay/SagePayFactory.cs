@@ -15,36 +15,36 @@ namespace OrangeTentacle.SagePay
         public static class Payment
         {
 
-            public static SageRequest Fetch()
+            public static SagePayment Fetch()
             {
                 return Fetch((ProviderTypes?)null);
             }
 
-            public static SageRequest Fetch(ProviderTypes? type)
+            public static SagePayment Fetch(ProviderTypes? type)
             {
                 return FetchForConfiguration(type, GetSection(null));
             }
 
-            public static SageRequest Fetch(string filename)
+            public static SagePayment Fetch(string filename)
             {
                 return Fetch((ProviderTypes?)null, filename);
             }
 
-            public static SageRequest Fetch(ProviderTypes? type, string filename)
+            public static SagePayment Fetch(ProviderTypes? type, string filename)
             {
                 return FetchForConfiguration(type, GetSection(filename));
             }
 
-            private static SageRequest FetchForConfiguration(ProviderTypes? type, SageConfiguration section)
+            private static SagePayment FetchForConfiguration(ProviderTypes? type, SageConfiguration section)
             {
                 var provider = section.Providers[type ?? section.Default];
                 return Fetch(provider.Type, provider.VendorName);
             }
 
-            public static SageRequest Fetch(ProviderTypes type, string vendorName)
+            public static SagePayment Fetch(ProviderTypes type, string vendorName)
             {
                 var paymentType = Map.Single(x => x.ProviderType == type).PaymentType;
-                return (SageRequest)Activator.CreateInstance(paymentType);
+                return (SagePayment)Activator.CreateInstance(paymentType);
             }
         }
 
@@ -98,10 +98,10 @@ namespace OrangeTentacle.SagePay
         }
 
         internal static readonly TypeMap[] Map = new TypeMap[] {
-            new TypeMap(ProviderTypes.Live, typeof(LiveSageRequest), typeof(LiveSageRefund)),
-            new TypeMap(ProviderTypes.Test, typeof(TestSageRequest), typeof(TestSageRefund)),
-            new TypeMap(ProviderTypes.Simulator, typeof(SimulatorSageRequest), typeof(SimulatorSageRefund)),
-            new TypeMap(ProviderTypes.Offline, typeof(OfflineSageRequest), typeof(OfflineSageRefund))
+            new TypeMap(ProviderTypes.Live, typeof(LiveSagePayment), typeof(LiveSageRefund)),
+            new TypeMap(ProviderTypes.Test, typeof(TestSagePayment), typeof(TestSageRefund)),
+            new TypeMap(ProviderTypes.Simulator, typeof(SimulatorSagePayment), typeof(SimulatorSageRefund)),
+            new TypeMap(ProviderTypes.Offline, typeof(OfflineSagePayment), typeof(OfflineSageRefund))
         };
 
         internal static SageConfiguration GetSection(string filename)
