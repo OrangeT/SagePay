@@ -77,7 +77,7 @@ namespace OrangeTentacle.SagePay.Request.Payment
                 collection.Add(values[0].Trim(), values[1].Trim());
             }
 
-            response.Status = EnumFromString<ResponseStatus>(collection["Status"]);
+            response.Status = WebHelper.EnumFromString<ResponseStatus>(collection["Status"]);
             response.StatusDetail = collection["StatusDetail"];
 
             if (response.Status == ResponseStatus.Invalid ||
@@ -100,17 +100,17 @@ namespace OrangeTentacle.SagePay.Request.Payment
                 response.Status != ResponseStatus.Ppredirect)
             {
 
-                response.AVSCV2 = EnumFromString<CV2Status>(collection["AVSCV2"]);
-                response.AddressResult = EnumFromString<MatchStatus>(collection["AddressResult"]);
-                response.PostCodeResult = EnumFromString<MatchStatus>(collection["PostCodeResult"]);
-                response.CV2Result = EnumFromString<MatchStatus>(collection["CV2Result"]);
+                response.AVSCV2 = WebHelper.EnumFromString<CV2Status>(collection["AVSCV2"]);
+                response.AddressResult = WebHelper.EnumFromString<MatchStatus>(collection["AddressResult"]);
+                response.PostCodeResult = WebHelper.EnumFromString<MatchStatus>(collection["PostCodeResult"]);
+                response.CV2Result = WebHelper.EnumFromString<MatchStatus>(collection["CV2Result"]);
             }
 
             // Doc state that if not enabled, should return "NOTCHECKED"
             // Nothing being returned from simulator - therefore default response.
             response.ThreeDSecure = ThreeDSecureStatus.NotChecked;
             if (collection.ContainsKey("3DSecureStatus"))
-                response.ThreeDSecure = EnumFromString<ThreeDSecureStatus>(collection["3DSecureStatus"]);
+                response.ThreeDSecure = WebHelper.EnumFromString<ThreeDSecureStatus>(collection["3DSecureStatus"]);
 
             if (response.ThreeDSecure == ThreeDSecureStatus.OK &&
                 response.Status == ResponseStatus.OK)
@@ -120,22 +120,12 @@ namespace OrangeTentacle.SagePay.Request.Payment
 
         }
 
-        private static T EnumFromString<T>(string value)
-        {
-            value = value.Replace(" ", "");
-            return (T) Enum.Parse(typeof (T), value, true);
-        }
-
         public override TransactionResponse Send()
         {
-            if (! IsValid)
+            if (!IsValid)
                 throw new SageException("Configuration Must Be Valid");
 
-            WebClient client = new WebClient();
-            var response = client.UploadValues(Url, Encode());
-            var textResponse = System.Text.Encoding.UTF8.GetString(response);
-
-            return Decode(textResponse);
+            return Decode(WebHelper.SendRequest(Url, Encode()));
         }
     }
 }

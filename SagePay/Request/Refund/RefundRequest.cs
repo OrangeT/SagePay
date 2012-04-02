@@ -8,6 +8,7 @@ namespace OrangeTentacle.SagePay.Request.Refund
 {
     public class RefundRequest : IValidate
     {
+        public string VPSProtocol { get { return "2.23"; } }
         public string VendorTxCode { get; set; }
         public decimal Amount { get; set; }
         public Currency Currency { get; set; }

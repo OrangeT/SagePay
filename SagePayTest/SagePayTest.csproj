@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Request\Payment\WebSageRefund.cs" />
     <Compile Include="Request\Refund\OfflineSageRefund.cs" />
     <Compile Include="Request\Refund\RefundRequest.cs" />
     <Compile Include="Response\FakeResponse.cs" />

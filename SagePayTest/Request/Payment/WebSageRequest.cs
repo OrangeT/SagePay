@@ -14,6 +14,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
     {
         public const string TEST_URL = "http://testserver/";
 
+        // Request fields taken from Protocol spec.
         public static readonly string[] REQUEST_FIELDS = new[] {"VPSProtocol", "TxType", "Vendor", "VendorTxCode", "Amount", "Currency",
                     "Description", "CardHolder", "CardNumber", "ExpiryDate", "CV2", "CardType", "BillingSurname",
                     "BillingFirstnames", "BillingAddress1", "BillingCity", "BillingPostCode", "BillingCountry",

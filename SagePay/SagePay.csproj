@@ -52,6 +52,7 @@
     <Compile Include="Request\Refund\OfflineSageRefund.cs" />
     <Compile Include="Request\Refund\RefundRequest.cs" />
     <Compile Include="Request\Refund\SageRefund.cs" />
+    <Compile Include="Request\WebHelper.cs" />
     <Compile Include="Response\CV2Status.cs" />
     <Compile Include="Response\MatchStatus.cs" />
     <Compile Include="Response\RefundResponse.cs" />
