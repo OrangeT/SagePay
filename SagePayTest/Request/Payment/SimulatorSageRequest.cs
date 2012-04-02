@@ -1,10 +1,21 @@
 using MbUnit.Framework;
+using OrangeTentacle.SagePay.Response;
 
 namespace OrangeTentacle.SagePayTest.Request.Payment
 {
     [TestFixture]
     public class SimulatorSageRequest
     {
+
+        public static readonly ResponseStatus[] ValidResponses = new[]
+                                         {
+                                             ResponseStatus.OK,
+                                             ResponseStatus.Registered,
+                                             ResponseStatus.NotAuthed,
+                                             ResponseStatus.Rejected,
+                                             ResponseStatus.Error
+                                         };
+
         [TestFixture]
         internal class Send
         {
@@ -19,16 +30,8 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
 
                 var response = request.Send();
 
-                var validResponses = new[]
-                                         {
-                                             SagePay.Response.ResponseStatus.OK,
-                                             SagePay.Response.ResponseStatus.Registered,
-                                             SagePay.Response.ResponseStatus.NotAuthed,
-                                             SagePay.Response.ResponseStatus.Rejected,
-                                             SagePay.Response.ResponseStatus.Error
-                                         };
 
-                Assert.Contains(validResponses, response.Status, 
+                Assert.Contains(ValidResponses, response.Status, 
                     string.Format("Error occured for status: {0}, message: {1}", 
                         response.Status,
                         response.StatusDetail));

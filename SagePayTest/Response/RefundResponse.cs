@@ -4,7 +4,7 @@ using OrangeTentacle.SagePay.Response;
 namespace OrangeTentacle.SagePayTest.Response
 {
     [TestFixture]
-    public class TransactionResponse
+    public class RefundResponse
     {
         [TestFixture]
         internal class IsValid
@@ -12,22 +12,21 @@ namespace OrangeTentacle.SagePayTest.Response
             [Test]
             public void StatusOk()
             {
-                var response = new SagePay.Response.TransactionResponse();
-                response.Status = SagePay.Response.ResponseStatus.OK;
+                var response = new SagePay.Response.RefundResponse();
+                response.Status = ResponseStatus.OK;
 
                 Assert.IsTrue(response.IsValid());
             }
 
             [Test]
-            public void StatusElse([EnumData(typeof(ResponseStatus), 
-                Exclude = ResponseStatus.OK)] ResponseStatus status)
+            public void StatusElse([EnumData(typeof(ResponseStatus),
+                                       Exclude = ResponseStatus.OK)] ResponseStatus status)
             {
-                var response = new SagePay.Response.TransactionResponse();
+                var response = new SagePay.Response.RefundResponse();
                 response.Status = status;
 
                 Assert.IsFalse(response.IsValid());
             }
-
         }
     }
 }

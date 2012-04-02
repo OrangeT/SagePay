@@ -98,7 +98,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Test]
             public void AllFields()
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
                 Assert.AreEqual(response.Collection["VPSProtocol"], decode.VPSProtocol);
@@ -119,7 +119,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [EnumData(typeof(SagePay.Response.ResponseStatus))]
             public void ResponseStatusTypes(SagePay.Response.ResponseStatus status)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["Status"] = status.ToString().ToUpper();
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
@@ -134,7 +134,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Row(SagePay.Response.CV2Status.DataNotChecked, "DATA NOT CHECKED")]
             public void AVSCV2Types(SagePay.Response.CV2Status status, string code)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["AVSCV2"] = code;
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
@@ -148,7 +148,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
             public void AddressResultTypes(SagePay.Response.MatchStatus status, string code)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["AddressResult"] = code;
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
@@ -162,7 +162,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
             public void PostCodeResultTypes(SagePay.Response.MatchStatus status, string code)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["PostCodeResult"] = code;
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
@@ -176,7 +176,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [Row(SagePay.Response.MatchStatus.NotMatched, "NOT MATCHED")]
             public void CV2ResultTypes(SagePay.Response.MatchStatus status, string code)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["CV2Result"] = code;
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 
@@ -187,7 +187,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             [EnumData(typeof(SagePay.Response.ThreeDSecureStatus))]
             public void ThreeDSecureTypes(SagePay.Response.ThreeDSecureStatus status)
             {
-                var response = new FakeTextResponse();
+                var response = new FakePaymentTextResponse();
                 response.Collection["3DSecureStatus"] = status.ToString().ToUpper();
                 var decode = SagePay.Request.Payment.WebSageRequest.Decode(response.Write());
 

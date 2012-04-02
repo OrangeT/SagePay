@@ -64,18 +64,7 @@ namespace OrangeTentacle.SagePay.Request.Payment
         public static TransactionResponse Decode(string input)
         {
             var response = new TransactionResponse();
-
-            var lines = input.Split('\n');
-            var collection = new Dictionary<string, string>();
-
-            foreach(var line in lines)
-            {
-                if (String.IsNullOrWhiteSpace(line))
-                    continue;
-
-                var values = line.Split('=');
-                collection.Add(values[0].Trim(), values[1].Trim());
-            }
+            var collection = WebHelper.SplitResponse(input);
 
             response.Status = WebHelper.EnumFromString<ResponseStatus>(collection["Status"]);
             response.StatusDetail = collection["StatusDetail"];

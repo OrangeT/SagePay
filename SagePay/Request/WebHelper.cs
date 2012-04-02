@@ -22,6 +22,23 @@ namespace OrangeTentacle.SagePay.Request
             var textResponse = System.Text.Encoding.UTF8.GetString(response);
             return textResponse;
         }
+
+        internal static Dictionary<string, string> SplitResponse(string response)
+        {
+            var lines = response.Split('\n');
+            var collection = new Dictionary<string, string>();
+
+            foreach (var line in lines)
+            {
+                if (String.IsNullOrWhiteSpace(line))
+                    continue;
+
+                var values = line.Split('=');
+                collection.Add(values[0].Trim(), values[1].Trim());
+            }
+
+            return collection;
+        }
     }
 
 }
