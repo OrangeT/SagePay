@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using MbUnit.Framework;
+using OrangeTentacle.SagePay.Request;
 using OrangeTentacle.SagePay.Request.Payment;
 using OrangeTentacle.SagePayTest.Configuration;
 using OrangeTentacle.SagePayTest.Response;

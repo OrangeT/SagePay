@@ -5,11 +5,6 @@ using OrangeTentacle.SagePay.Sugar;
 
 namespace OrangeTentacle.SagePay.Request.Payment
 {
-    public interface IValidate
-    {
-        List<ValidationError> Validate();
-    }
-
     public class TransactionRequest : IValidate
     {
         public string VPSProtocol { get { return "2.23"; } }
@@ -75,11 +70,5 @@ namespace OrangeTentacle.SagePay.Request.Payment
             Deferred,
             AuthenticateOnly
         }
-    }
-
-    public enum Currency
-    {
-        GBP,
-        USD
     }
 }

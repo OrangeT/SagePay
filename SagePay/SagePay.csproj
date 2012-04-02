@@ -46,7 +46,10 @@
     <Compile Include="ProviderTypes.cs" />
     <Compile Include="Request\BaseSageRequest.cs" />
     <Compile Include="Request\CardType.cs" />
+    <Compile Include="Request\IValidate.cs" />
+    <Compile Include="Request\Currency.cs" />
     <Compile Include="Request\Payment\LiveSageRequest.cs" />
+    <Compile Include="Request\Refund\RefundRequest.cs" />
     <Compile Include="Response\CV2Status.cs" />
     <Compile Include="Response\MatchStatus.cs" />
     <Compile Include="Response\ResponseStatus.cs" />
@@ -67,9 +70,7 @@
     <Compile Include="Request\VendorRequest.cs" />
     <Compile Include="Request\Payment\WebSageRequest.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Request\Refund\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
