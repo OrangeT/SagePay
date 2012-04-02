@@ -39,8 +39,8 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void ReturnsErrors()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
-                request.Payment = PaymentRequest.SampleRequest();
-                request.Payment.CV2 = "12";
+                request.Transaction = PaymentRequest.SampleRequest();
+                request.Transaction.CV2 = "12";
                 var errors = request.Validate();
 
                 Assert.AreEqual(1, errors.Count);
@@ -52,7 +52,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void SetsIsValid()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
-                request.Payment = PaymentRequest.SampleRequest();
+                request.Transaction = PaymentRequest.SampleRequest();
                 var errors = request.Validate();
 
                 Assert.AreEqual(0, errors.Count);
@@ -75,7 +75,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void EmitsAResponseIsValid()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
-                request.Payment = PaymentRequest.SampleRequest();
+                request.Transaction = PaymentRequest.SampleRequest();
                 request.Validate();
 
                 var response = request.Send();

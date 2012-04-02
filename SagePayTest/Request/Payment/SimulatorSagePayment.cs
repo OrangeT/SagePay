@@ -24,7 +24,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void AValidTransactionReturnsAValidResponse()
             {
                 var request = new SagePay.Request.Payment.SimulatorSagePayment();
-                request.Payment = PaymentRequest.SampleRequest();
+                request.Transaction = PaymentRequest.SampleRequest();
 
                 request.Validate();
 

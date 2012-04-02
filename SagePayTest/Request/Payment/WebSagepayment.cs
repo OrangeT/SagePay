@@ -48,7 +48,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void AllValuesInCollection(string key)
             {
                 var request = new SagePay.Request.Payment.WebSagePayment(SageConfiguration.CONFIG_TYPE, TEST_URL);
-                request.Payment = PaymentRequest.SampleRequest();
+                request.Transaction = PaymentRequest.SampleRequest();
                 var encode = request.Encode();
 
                 Assert.IsNotNull(encode[key], "Key Not Found");
@@ -59,10 +59,10 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void ExpiryDateFormat()
             {
                 var request = new SagePay.Request.Payment.WebSagePayment(SageConfiguration.CONFIG_TYPE, TEST_URL);
-                request.Payment = PaymentRequest.SampleRequest();
+                request.Transaction = PaymentRequest.SampleRequest();
                 var encode = request.Encode();
                 
-                Assert.AreEqual(string.Format("{0:MMyy}", request.Payment.ExpiryDate),encode["ExpiryDate"]);
+                Assert.AreEqual(string.Format("{0:MMyy}", request.Transaction.ExpiryDate),encode["ExpiryDate"]);
             }
 
             [Test]
@@ -72,8 +72,8 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void TxTypeTypes(SagePay.Request.Payment.PaymentRequest.PaymentType type, string expected)
             {
                 var request = new SagePay.Request.Payment.WebSagePayment(SageConfiguration.CONFIG_TYPE, TEST_URL);
-                request.Payment = PaymentRequest.SampleRequest();
-                request.Payment.TxType = type;
+                request.Transaction = PaymentRequest.SampleRequest();
+                request.Transaction.TxType = type;
                 var encode = request.Encode();
 
                 Assert.AreEqual(encode["TxType"], expected);
@@ -84,8 +84,8 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
             public void CurrencyTypes(Currency currency)
             {
                 var request = new SagePay.Request.Payment.WebSagePayment(SageConfiguration.CONFIG_TYPE, TEST_URL);
-                request.Payment = PaymentRequest.SampleRequest();
-                request.Payment.Currency = currency;
+                request.Transaction = PaymentRequest.SampleRequest();
+                request.Transaction.Currency = currency;
                 var encode = request.Encode();
 
                 Assert.AreEqual(encode["Currency"], currency.ToString().ToUpper());

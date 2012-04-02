@@ -27,37 +27,37 @@ namespace OrangeTentacle.SagePay.Request.Payment
         {
             var collection = new NameValueCollection();
 
-            collection.Add("VPSProtocol", Payment.VPSProtocol);
+            collection.Add("VPSProtocol", Transaction.VPSProtocol);
 
-            if (Payment.TxType == PaymentRequest.PaymentType.AuthenticateOnly)
+            if (Transaction.TxType == PaymentRequest.PaymentType.AuthenticateOnly)
                 collection.Add("TxType", "AUTHENTICATE ONLY");
-            if (Payment.TxType == PaymentRequest.PaymentType.Deferred)
+            if (Transaction.TxType == PaymentRequest.PaymentType.Deferred)
                 collection.Add("TxType", "DEFERRED");
-            if (Payment.TxType == PaymentRequest.PaymentType.Payment)
+            if (Transaction.TxType == PaymentRequest.PaymentType.Payment)
                 collection.Add("TxType", "PAYMENT");
 
             collection.Add("Vendor", Vendor.VendorName);
-            collection.Add("VendorTxCode", Payment.VendorTxCode);
-            collection.Add("Amount", Payment.Amount.ToString());
-            collection.Add("Currency", Payment.Currency.ToString().ToUpper());
-            collection.Add("Description", Payment.Description);
-            collection.Add("CardHolder", Payment.CardHolderName);
-            collection.Add("CardNumber", Payment.CardNumber);
-            collection.Add("ExpiryDate", Payment.ExpiryDate.ToString("MMyy"));
-            collection.Add("CV2", Payment.CV2);
-            collection.Add("CardType", Payment.CardType.ToString());
-            collection.Add("BillingSurname", Payment.Billing.Surname);
-            collection.Add("BillingFirstnames", Payment.Billing.Firstnames);
-            collection.Add("BillingAddress1", Payment.Billing.Address1);
-            collection.Add("BillingCity", Payment.Billing.City);
-            collection.Add("BillingPostCode", Payment.Billing.PostCode);
-            collection.Add("BillingCountry", Payment.Billing.Country);
-            collection.Add("DeliverySurname", Payment.Delivery.Surname);
-            collection.Add("DeliveryFirstnames", Payment.Delivery.Firstnames);
-            collection.Add("DeliveryAddress1", Payment.Delivery.Address1);
-            collection.Add("DeliveryCity", Payment.Delivery.City);
-            collection.Add("DeliveryPostCode", Payment.Delivery.PostCode);
-            collection.Add("DeliveryCountry", Payment.Delivery.Country);
+            collection.Add("VendorTxCode", Transaction.VendorTxCode);
+            collection.Add("Amount", Transaction.Amount.ToString());
+            collection.Add("Currency", Transaction.Currency.ToString().ToUpper());
+            collection.Add("Description", Transaction.Description);
+            collection.Add("CardHolder", Transaction.CardHolderName);
+            collection.Add("CardNumber", Transaction.CardNumber);
+            collection.Add("ExpiryDate", Transaction.ExpiryDate.ToString("MMyy"));
+            collection.Add("CV2", Transaction.CV2);
+            collection.Add("CardType", Transaction.CardType.ToString());
+            collection.Add("BillingSurname", Transaction.Billing.Surname);
+            collection.Add("BillingFirstnames", Transaction.Billing.Firstnames);
+            collection.Add("BillingAddress1", Transaction.Billing.Address1);
+            collection.Add("BillingCity", Transaction.Billing.City);
+            collection.Add("BillingPostCode", Transaction.Billing.PostCode);
+            collection.Add("BillingCountry", Transaction.Billing.Country);
+            collection.Add("DeliverySurname", Transaction.Delivery.Surname);
+            collection.Add("DeliveryFirstnames", Transaction.Delivery.Firstnames);
+            collection.Add("DeliveryAddress1", Transaction.Delivery.Address1);
+            collection.Add("DeliveryCity", Transaction.Delivery.City);
+            collection.Add("DeliveryPostCode", Transaction.Delivery.PostCode);
+            collection.Add("DeliveryCountry", Transaction.Delivery.Country);
             return collection;
         }
 

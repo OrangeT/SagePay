@@ -5,7 +5,7 @@ namespace OrangeTentacle.SagePay.Request.Payment
 {
     public abstract class SagePayment : BaseSageRequest
     {
-        public PaymentRequest Payment { get; set; }
+        public PaymentRequest Transaction { get; set; }
 
         public SagePayment(ProviderTypes type)
             : base(type)
@@ -17,7 +17,7 @@ namespace OrangeTentacle.SagePay.Request.Payment
 
         public List<ValidationError> Validate()
         {
-            return Validate(Payment, out _isValid);
+            return Validate(Transaction, out _isValid);
         }
 
         public abstract PaymentResponse Send();
