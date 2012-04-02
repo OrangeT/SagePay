@@ -49,9 +49,12 @@
     <Compile Include="Request\IValidate.cs" />
     <Compile Include="Request\Currency.cs" />
     <Compile Include="Request\Payment\LiveSageRequest.cs" />
+    <Compile Include="Request\Refund\OfflineSageRefund.cs" />
     <Compile Include="Request\Refund\RefundRequest.cs" />
+    <Compile Include="Request\Refund\SageRefund.cs" />
     <Compile Include="Response\CV2Status.cs" />
     <Compile Include="Response\MatchStatus.cs" />
+    <Compile Include="Response\RefundResponse.cs" />
     <Compile Include="Response\ResponseStatus.cs" />
     <Compile Include="Response\ThreeDSecureStatus.cs" />
     <Compile Include="Sugar\Luhn.cs" />
