@@ -5,13 +5,13 @@ namespace OrangeTentacle.SagePay.Request.Refund
         private const string _url = "https://test.sagepay.com/gateway/service/refund.vsp";
         private const ProviderTypes _type = ProviderTypes.Test;
 
-        public SimulatorSageRefund()
+        public TestSageRefund()
             : base(_type, _url)
         {
 
         }
 
-        public SimulatorSageRefund(string vendorName)
+        public TestSageRefund(string vendorName)
             : base(vendorName, _url)
         {
 
