@@ -1,8 +1,7 @@
-using System;
-using System.IO;
 using System.Linq;
 using MbUnit.Framework;
 using OrangeTentacle.SagePay.Request.Payment;
+using OrangeTentacle.SagePay.Request.Refund;
 
 namespace OrangeTentacle.SagePayTest
 {
@@ -10,97 +9,69 @@ namespace OrangeTentacle.SagePayTest
     public class SagePayFactory
     {
         [TestFixture]
-        internal class Fetch
+        internal class Payment
         {
-            [Test]
-            public void Live()
+            [TestFixture]
+            internal class Fetch
             {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Live);
+                [Test]
+                public void Default()
+                {
+                    var provider = SagePay.SagePayFactory.Payment.Fetch();
+                    Assert.IsInstanceOfType<OfflineSageRequest>(provider);
+                }
 
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.LiveSageRequest), provider);
-            }
+                [Test]
+                [Factory(typeof (PathsAndTypes), "GetProviders")]
+                public void ForProviderTypes(PathsAndTypes.ProviderMapping mapping)
+                {
+                    var provider = SagePay.SagePayFactory.Payment.Fetch(mapping.ProviderType);
+                    Assert.IsInstanceOfType(mapping.PaymentType, provider,
+                                            string.Format("Failed to return Type {0} for ProviderType {1}",
+                                                          mapping.PaymentType, mapping.ProviderType));
+                }
 
-            [Test]
-            public void Test()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Test);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.TestSageRequest), provider);
-            }
-
-            [Test]
-            public void Simulator()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Simulator);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.SimulatorSageRequest), provider);
-            }
-
-            [Test]
-            public void Offline()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(SagePay.ProviderTypes.Offline);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
+                [Test]
+                [Factory(typeof (PathsAndTypes), "GetFiles")]
+                public void ForConfigFiles(PathsAndTypes.PathMapping mapping)
+                {
+                    var provider = SagePay.SagePayFactory.Payment.Fetch(mapping.FileName);
+                    Assert.IsInstanceOfType(mapping.PaymentType, provider);
+                }
             }
         }
 
         [TestFixture]
-        internal class FetchFromConfig
+        internal class Refund
         {
-            public const string BASE_PATH = "../../Examples/";
-            public const string DEFAULT_FILE = BASE_PATH + "App.config.default";
-            public const string LIVE_FILE = BASE_PATH + "App.config.live";
-            public const string TEST_FILE = BASE_PATH + "App.config.test";
-            public const string SIMULATOR_FILE = BASE_PATH + "App.config.simulator";
-            public const string OFFLINE_FILE = BASE_PATH + "App.config.offline";
-
-            // Load the relevant default provider from config.
-
-            [Test]
-            public void TestFilesExist()
+            [TestFixture]
+            internal class Fetch
             {
-                Assert.IsTrue(File.Exists(DEFAULT_FILE));
-                Assert.IsTrue(File.Exists(LIVE_FILE));
-                Assert.IsTrue(File.Exists(TEST_FILE));
-                Assert.IsTrue(File.Exists(SIMULATOR_FILE));
-                Assert.IsTrue(File.Exists(OFFLINE_FILE));
-            }
+                [Test]
+                public void Default()
+                {
+                    var provider = SagePay.SagePayFactory.Refund.Fetch();
+                    Assert.IsInstanceOfType<OfflineSageRefund>(provider);
+                }
 
-            [Test]
-            public void Default_Offline()
-            {
-                // Where multiple providers exist, and no default specified, 
-                // return the first in the list
-                var provider = SagePay.SagePayFactory.Fetch(DEFAULT_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
-            }
+                [Test]
+                [Factory(typeof(PathsAndTypes), "GetProviders")]
+                public void ForProviderTypes(PathsAndTypes.ProviderMapping mapping)
+                {
+                    var provider = SagePay.SagePayFactory.Refund.Fetch(mapping.ProviderType);
+                    Assert.IsInstanceOfType(mapping.RefundType, provider,
+                                            string.Format("Failed to return Type {0} for ProviderType {1}",
+                                                          mapping.RefundType, mapping.ProviderType));
+                }
 
-            [Test]
-            public void Live()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(LIVE_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.LiveSageRequest), provider);
-            }
-
-            [Test]
-            public void Test()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(TEST_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.TestSageRequest), provider);
-            }
-
-            [Test]
-            public void Simulator()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(SIMULATOR_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.SimulatorSageRequest), provider);                
-            }
-
-            [Test]
-            public void Offline()
-            {
-                var provider = SagePay.SagePayFactory.Fetch(OFFLINE_FILE);
-                Assert.IsInstanceOfType(typeof(SagePay.Request.Payment.OfflineSageRequest), provider);
+                [Test]
+                [Factory(typeof(PathsAndTypes), "GetFiles")]
+                public void ForConfigFiles(PathsAndTypes.PathMapping mapping)
+                {
+                    var provider = SagePay.SagePayFactory.Refund.Fetch(mapping.FileName);
+                    Assert.IsInstanceOfType(mapping.RefundType, provider);
+                }
             }
         }
-    
     }
 }
