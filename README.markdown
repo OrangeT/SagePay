@@ -27,7 +27,7 @@ Add the following to your app.config/web.config
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 	<configSections>
-		<section name="SagePay" type="OrangeTentacle.SagePay.SageConfiguration, SagePay" />
+		<section name="SagePay" type="OrangeTentacle.SagePay.Configuration.SageConfiguration, SagePay" />
 	</configSections>
 
 	<SagePay default="Live">
@@ -42,13 +42,30 @@ Add the following to your app.config/web.config
 Usage
 --
 
-After referencing the SagePay library:
+After referencing the SagePay library.
+
+To make a payment:
+
 
 ```csharp
-var request = SagePayFactory.Fetch(); // Load default type
-request = request.Fetch(ProviderTypes.Live); // Load live type
+var request = SagePayFactory.Payment.Fetch(); // Load default type
+request = SagePayFactory.Payment.Fetch(ProviderTypes.Live); // Load live type
 
 request.Transaction = new TransactionRequest(); // You may want to populate the transaction
+
+request.Validate(); // Non validated transactions will throw on send.
+
+var response = request.Send();
+```
+
+To make a refund:
+
+
+```csharp
+var request = SagePayFactory.Refund.Fetch(); // Load default type
+request = SagePayFactory.Refund.Fetch(ProviderTypes.Live); // Load live type
+
+request.Transaction = new RefundRequest(); // You may want to populate the transaction
 
 request.Validate(); // Non validated transactions will throw on send.
 
@@ -58,5 +75,5 @@ var response = request.Send();
 
 Todo
 --
-* Implement refunds.
-* Organise the library heirarchy to be a little less ... flat.
+* Refund types incorporate "Refund" in to type, where Payment types are still bare.  This causes
+  ambiguity.  Change payment type names to incorporate word "Payment".

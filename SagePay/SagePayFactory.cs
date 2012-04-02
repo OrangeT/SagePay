@@ -22,8 +22,7 @@ namespace OrangeTentacle.SagePay
 
             public static SageRequest Fetch(ProviderTypes? type)
             {
-                var section = ConfigurationManager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
-                return FetchForConfiguration(type, section);
+                return FetchForConfiguration(type, GetSection(null));
             }
 
             public static SageRequest Fetch(string filename)
@@ -33,11 +32,7 @@ namespace OrangeTentacle.SagePay
 
             public static SageRequest Fetch(ProviderTypes? type, string filename)
             {
-                var fileMap = new ExeConfigurationFileMap();
-                fileMap.ExeConfigFilename = filename;
-                var manager = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-                var section = manager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
-                return FetchForConfiguration(type, section);
+                return FetchForConfiguration(type, GetSection(filename));
             }
 
             private static SageRequest FetchForConfiguration(ProviderTypes? type, SageConfiguration section)
@@ -48,17 +43,8 @@ namespace OrangeTentacle.SagePay
 
             public static SageRequest Fetch(ProviderTypes type, string vendorName)
             {
-                switch (type)
-                {
-                    case ProviderTypes.Live:
-                        return string.IsNullOrEmpty(vendorName) ? new LiveSageRequest() : new LiveSageRequest(vendorName);
-                    case ProviderTypes.Test:
-                        return string.IsNullOrEmpty(vendorName) ? new TestSageRequest() : new TestSageRequest(vendorName);
-                    case ProviderTypes.Simulator:
-                        return string.IsNullOrEmpty(vendorName) ? new SimulatorSageRequest() : new SimulatorSageRequest(vendorName);
-                    default:
-                        return string.IsNullOrEmpty(vendorName) ? new OfflineSageRequest() : new OfflineSageRequest(vendorName);
-                }
+                var paymentType = Map.Single(x => x.ProviderType == type).PaymentType;
+                return (SageRequest)Activator.CreateInstance(paymentType);
             }
         }
 
@@ -71,8 +57,7 @@ namespace OrangeTentacle.SagePay
 
             public static SageRefundRequest Fetch(ProviderTypes? type)
             {
-                var section = ConfigurationManager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
-                return FetchForConfiguration(type, section);
+                return FetchForConfiguration(type, GetSection(null));
             }
 
             public static SageRefundRequest Fetch(string filename)
@@ -82,11 +67,7 @@ namespace OrangeTentacle.SagePay
 
             public static SageRefundRequest Fetch(ProviderTypes? type, string filename)
             {
-                var fileMap = new ExeConfigurationFileMap();
-                fileMap.ExeConfigFilename = filename;
-                var manager = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-                var section = manager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
-                return FetchForConfiguration(type, section);
+                return FetchForConfiguration(type, GetSection(filename));
             }
 
             private static SageRefundRequest FetchForConfiguration(ProviderTypes? type, SageConfiguration section)
@@ -97,18 +78,41 @@ namespace OrangeTentacle.SagePay
 
             public static SageRefundRequest Fetch(ProviderTypes type, string vendorName)
             {
-                switch (type)
-                {
-                    case ProviderTypes.Live:
-                        return string.IsNullOrEmpty(vendorName) ? new LiveSageRefund() : new LiveSageRefund(vendorName);
-                    case ProviderTypes.Test:
-                        return string.IsNullOrEmpty(vendorName) ? new TestSageRefund() : new TestSageRefund(vendorName);
-                    case ProviderTypes.Simulator:
-                        return string.IsNullOrEmpty(vendorName) ? new SimulatorSageRefund() : new SimulatorSageRefund(vendorName);
-                    default:
-                        return string.IsNullOrEmpty(vendorName) ? new OfflineSageRefund() : new OfflineSageRefund(vendorName);
-                }
+                var paymentType = Map.Single(x => x.ProviderType == type).RefundType;
+                return (SageRefundRequest)Activator.CreateInstance(paymentType);
             }
+        }
+
+        internal class TypeMap
+        {
+            public ProviderTypes ProviderType { get; set; }
+            public Type PaymentType { get; set; }
+            public Type RefundType { get; set; }
+
+            public TypeMap(ProviderTypes type, Type paymentType, Type refundType)
+            {
+                ProviderType = type;
+                PaymentType = paymentType;
+                RefundType = refundType;
+            }
+        }
+
+        internal static readonly TypeMap[] Map = new TypeMap[] {
+            new TypeMap(ProviderTypes.Live, typeof(LiveSageRequest), typeof(LiveSageRefund)),
+            new TypeMap(ProviderTypes.Test, typeof(TestSageRequest), typeof(TestSageRefund)),
+            new TypeMap(ProviderTypes.Simulator, typeof(SimulatorSageRequest), typeof(SimulatorSageRefund)),
+            new TypeMap(ProviderTypes.Offline, typeof(OfflineSageRequest), typeof(OfflineSageRefund))
+        };
+
+        internal static SageConfiguration GetSection(string filename)
+        {
+            if (filename == null)
+                return ConfigurationManager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
+
+            var fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = filename;
+            var manager = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+            return manager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
         }
     }
 }
