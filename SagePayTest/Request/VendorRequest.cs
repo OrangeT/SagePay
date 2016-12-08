@@ -1,30 +1,30 @@
 using System.Configuration;
-using MbUnit.Framework;
+using Xunit;
 using OrangeTentacle.SagePayTest.Configuration;
 
 namespace OrangeTentacle.SagePayTest.Request
 {
-    [TestFixture]
+    
     public class VendorRequest
     {
-        [TestFixture]
-        internal class Constructor
+        
+        public class Constructor
         {
 
-            [Test]
+            [Fact]
             public void Valid()
             {
                 var name = "bob";
                 var vendor = new SagePay.Request.VendorRequest(name);
-                Assert.AreEqual(vendor.VendorName, name);
+                Assert.Equal(vendor.VendorName, name);
             }
 
-            [Test]
-            [AssertException(typeof(ConfigurationErrorsException))]
+            [Fact]
             public void EmptyIsNotValid()
             {
                 var name = string.Empty;
-                var vendor = new SagePay.Request.VendorRequest(name);
+
+                Assert.Throws<ConfigurationErrorsException>(() => new SagePay.Request.VendorRequest(name));
             }
         }
 

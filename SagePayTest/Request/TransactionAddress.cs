@@ -1,81 +1,81 @@
 using System.Linq;
-using MbUnit.Framework;
+using Xunit;
 
 namespace OrangeTentacle.SagePayTest.Request
 {
-    [TestFixture]
+    
     public class TransactionAddress
     {
-        [TestFixture]
-        internal class Validate
+        
+        public class Validate
         {
-            [Test]
+            [Fact]
             public void IsValid()
             {
                 var address = SampleAddress();
                 var errors = address.Validate();
 
-                Assert.IsEmpty(errors);
+                Assert.Empty(errors);
             }
 
-            [Test]
+            [Fact]
             public void SurnameMissing()
             {
                 var address = SampleAddress();
                 address.Surname = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("Surname", errors.First().Field);
+                Assert.Equal("Surname", errors.First().Field);
             }
 
-            [Test]
+            [Fact]
             public void FirstnamesMissing()
             {
                 var address = SampleAddress();
                 address.Firstnames = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("Firstnames", errors.First().Field);                
+                Assert.Equal("Firstnames", errors.First().Field);                
             }
 
-            [Test]
+            [Fact]
             public void Address1Missing()
             {
                 var address = SampleAddress();
                 address.Address1 = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("Address1", errors.First().Field);                                
+                Assert.Equal("Address1", errors.First().Field);                                
             }
 
-            [Test]
+            [Fact]
             public void CityMissing()
             {
                 var address = SampleAddress();
                 address.City = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("City", errors.First().Field);                                
+                Assert.Equal("City", errors.First().Field);                                
             }
 
-            [Test]
+            [Fact]
             public void PostCodeMissing()
             {
                 var address = SampleAddress();
                 address.PostCode = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("Postcode", errors.First().Field);                
+                Assert.Equal("Postcode", errors.First().Field);                
             }
 
-            [Test]
+            [Fact]
             public void CountryMissing()
             {
                 var address = SampleAddress();
                 address.Country = string.Empty;
 
                 var errors = address.Validate();
-                Assert.AreEqual("Country", errors.First().Field);                
+                Assert.Equal("Country", errors.First().Field);                
             }
         }
 

@@ -1,41 +1,41 @@
 ﻿using System.Linq;
-using MbUnit.Framework;
+using Xunit;
 using OrangeTentacle.SagePay;
 using OrangeTentacle.SagePay.Request.Payment;
 using OrangeTentacle.SagePay.Configuration;
 
 namespace OrangeTentacle.SagePayTest.Request.Payment
 {
-    [TestFixture]
+    
     public class OfflineSagePayment
     {
-        [TestFixture]
-        internal class Constructor
+        
+        public class Constructor
         {
-            [Test]
+            [Fact]
             public void ConfigureFromConfig()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
                 var section = SagePay.Configuration.SageConfiguration.GetSection(ProviderTypes.Offline);
 
 
-                Assert.AreEqual(section.VendorName, request.Vendor.VendorName);
+                Assert.Equal(section.VendorName, request.Vendor.VendorName);
             }
 
-            [Test]
+            [Fact]
             public void ConfigureFromConstructor()
             {
                 var name = "bob";
                 var request = new SagePay.Request.Payment.OfflineSagePayment(name);
 
-                Assert.AreEqual(name, request.Vendor.VendorName);
+                Assert.Equal(name, request.Vendor.VendorName);
             }
         }
 
-        [TestFixture]
-        internal class Validate
+        
+        public class Validate
         {
-            [Test]
+            [Fact]
             public void ReturnsErrors()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
@@ -43,35 +43,35 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
                 request.Transaction.CV2 = "12";
                 var errors = request.Validate();
 
-                Assert.AreEqual(1, errors.Count);
-                Assert.AreEqual("CV2", errors.First().Field);
-                Assert.IsFalse(request.IsValid);
+                Assert.Equal(1, errors.Count);
+                Assert.Equal("CV2", errors.First().Field);
+                Assert.False(request.IsValid);
             }
 
-            [Test]
+            [Fact]
             public void SetsIsValid()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
                 request.Transaction = PaymentRequest.SampleRequest();
                 var errors = request.Validate();
 
-                Assert.AreEqual(0, errors.Count);
-                Assert.IsTrue(request.IsValid);
+                Assert.Equal(0, errors.Count);
+                Assert.True(request.IsValid);
             }
         }
 
-        [TestFixture]
-        internal class Send
+        
+        public class Send
         {
-            [Test]
-            [AssertException(typeof (SageException))]
-            public void ThrowsAnExceptionIfInvalid()
+            [Fact]
+            public void ThInlineDatasAnExceptionIfInvalid()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
-                var response = request.Send();
+
+                Assert.Throws<SageException>(() => request.Send());
             }
 
-            [Test]
+            [Fact]
             public void EmitsAResponseIsValid()
             {
                 var request = new SagePay.Request.Payment.OfflineSagePayment();
@@ -79,7 +79,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
                 request.Validate();
 
                 var response = request.Send();
-                Assert.IsNotNull(response);
+                Assert.NotNull(response);
             }
         }
     }

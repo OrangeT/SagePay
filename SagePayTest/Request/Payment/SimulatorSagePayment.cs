@@ -1,9 +1,9 @@
-using MbUnit.Framework;
+using Xunit;
 using OrangeTentacle.SagePay.Response;
 
 namespace OrangeTentacle.SagePayTest.Request.Payment
 {
-    [TestFixture]
+    
     public class SimulatorSagePayment
     {
 
@@ -16,25 +16,25 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
                                              ResponseStatus.Error
                                          };
 
-        [TestFixture]
-        internal class Send
+        
+        public class Send
         {
-            [Test]
-            [Repeat(100)]
+            /* Please note - IP address needs to be valid with SagePay */
+
+            [Fact]
             public void AValidTransactionReturnsAValidResponse()
             {
-                var request = new SagePay.Request.Payment.SimulatorSagePayment();
-                request.Transaction = PaymentRequest.SampleRequest();
+                for (var i = 0; i < 100; i++)
+                {
+                    var request = new SagePay.Request.Payment.SimulatorSagePayment();
+                    request.Transaction = PaymentRequest.SampleRequest();
 
-                request.Validate();
+                    request.Validate();
 
-                var response = request.Send();
+                    var response = request.Send();
 
-
-                Assert.Contains(ValidResponses, response.Status, 
-                    string.Format("Error occured for status: {0}, message: {1}", 
-                        response.Status,
-                        response.StatusDetail));
+                    Assert.Contains(response.Status, ValidResponses);
+                }
             }
         }
     }

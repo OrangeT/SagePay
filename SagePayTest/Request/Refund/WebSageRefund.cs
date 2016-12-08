@@ -1,55 +1,66 @@
-using MbUnit.Framework;
+using System.Collections.Generic;
+using Xunit;
 using OrangeTentacle.SagePay.Request;
 using OrangeTentacle.SagePayTest.Configuration;
 using OrangeTentacle.SagePayTest.Response;
 
 namespace OrangeTentacle.SagePayTest.Request.Refund
 {
-    [TestFixture]
+    
     public class WebSageRefund
     {
         public const string TEST_URL = "http://testserver/";
 
         // Request fields taken from Protocol spec.
-        public static readonly string[] REQUEST_FIELDS = new[] {"VPSProtocol", "TxType", "Vendor", "VendorTxCode", "Amount", "Currency", "Description", "RelatedVPSTxId",
-            "RelatedVendorTxCode", "RelatedSecurityKey", "RelatedTxAuthNo"};
+        public static readonly IEnumerable<object[]> REQUEST_FIELDS = new[] {
+            new [] {"VPSProtocol"},
+            new [] {"TxType"},
+            new [] {"Vendor"},
+            new [] {"VendorTxCode"},
+            new [] {"Amount"},
+            new [] {"Currency"},
+            new [] {"Description"},
+            new [] {"RelatedVPSTxId"},
+            new [] {"RelatedVendorTxCode"},
+            new [] {"RelatedSecurityKey"},
+            new [] { "RelatedTxAuthNo"} };
 
-        [TestFixture]
-        internal class Constructor
+        
+        public class Constructor
         {
 
-            [Test]
+            [Fact]
             public void TakesAnEndPointAndSection()
             {
                 var request = new SagePay.Request.Refund.WebSageRefund(SageConfiguration.CONFIG_TYPE, TEST_URL);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(request.Url));
+                Assert.False(string.IsNullOrWhiteSpace(request.Url));
             }
 
-            [Test]
+            [Fact]
             public void TakesAnEndPointAndVendorName()
             {
                 var request = new SagePay.Request.Refund.WebSageRefund("bob", TEST_URL);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(request.Url));
+                Assert.False(string.IsNullOrWhiteSpace(request.Url));
             }
         }
 
-        [TestFixture]
-        internal class Encode
+        
+        public class Encode
         {
-            [Test]
-            [Factory(typeof(WebSageRefund), "REQUEST_FIELDS")]
+            [Theory, MemberData("REQUEST_FIELDS", MemberType = typeof(WebSageRefund))]
             public void AllValuesInCollection(string key)
             {
                 var request = new SagePay.Request.Refund.WebSageRefund(SageConfiguration.CONFIG_TYPE, TEST_URL);
                 request.Transaction = RefundRequest.SampleRequest();
                 var encode = request.Encode();
 
-                Assert.IsNotNull(encode[key], "Key Not Found");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(encode[key]));
+                Assert.NotNull(encode[key]);
+                Assert.False(string.IsNullOrWhiteSpace(encode[key]));
             }
 
-            [Test]
-            [EnumData(typeof(Currency))]
+            [Theory]
+            [InlineData(Currency.USD)]
+            [InlineData(Currency.GBP)]
             public void CurrencyTypes(Currency currency)
             {
                 var request = new SagePay.Request.Refund.WebSageRefund(SageConfiguration.CONFIG_TYPE, TEST_URL);
@@ -57,35 +68,45 @@ namespace OrangeTentacle.SagePayTest.Request.Refund
                 request.Transaction.Currency = currency;
                 var encode = request.Encode();
 
-                Assert.AreEqual(encode["Currency"], currency.ToString().ToUpper());
+                Assert.Equal(encode["Currency"], currency.ToString().ToUpper());
             }
         }
 
-        [TestFixture]
-        internal class Decode
+        
+        public class Decode
         {
-            [Test]
+            [Fact]
             public void AllFields()
             {
                 var response = new FakeRefundTextResponse();
                 var decode = SagePay.Request.Refund.WebSageRefund.Decode(response.Write());
 
-                Assert.AreEqual(response.Collection["VPSProtocol"], decode.VPSProtocol);
-                Assert.AreEqual(response.Collection["Status"], decode.Status.ToString().ToUpper());
-                Assert.AreEqual(response.Collection["StatusDetail"], decode.StatusDetail);
-                Assert.AreEqual(response.Collection["VPSTxId"], decode.VPSTxId);
-                Assert.AreEqual(response.Collection["TxAuthNo"], decode.TxAuthNo.ToString());
+                Assert.Equal(response.Collection["VPSProtocol"], decode.VPSProtocol);
+                Assert.Equal(response.Collection["Status"], decode.Status.ToString().ToUpper());
+                Assert.Equal(response.Collection["StatusDetail"], decode.StatusDetail);
+                Assert.Equal(response.Collection["VPSTxId"], decode.VPSTxId);
+                Assert.Equal(response.Collection["TxAuthNo"], decode.TxAuthNo.ToString());
             }
 
-            [Test]
-            [EnumData(typeof(SagePay.Response.ResponseStatus))]
+            [Theory]
+            [InlineData(SagePay.Response.ResponseStatus.OK)]
+            [InlineData(SagePay.Response.ResponseStatus.Authenticated)]
+            [InlineData(SagePay.Response.ResponseStatus.Error)]
+            [InlineData(SagePay.Response.ResponseStatus.Invalid)]
+            [InlineData(SagePay.Response.ResponseStatus.Malformed)]
+            [InlineData(SagePay.Response.ResponseStatus.NotAuthed)]
+            [InlineData(SagePay.Response.ResponseStatus.OK)]
+            [InlineData(SagePay.Response.ResponseStatus.Ppredirect)]
+            [InlineData(SagePay.Response.ResponseStatus.Registered)]
+            [InlineData(SagePay.Response.ResponseStatus.Rejected)]
+            [InlineData(SagePay.Response.ResponseStatus.ThreeDAuth)]
             public void ResponseStatusTypes(SagePay.Response.ResponseStatus status)
             {
                 var response = new FakeRefundTextResponse();
                 response.Collection["Status"] = status.ToString().ToUpper();
                 var decode = SagePay.Request.Refund.WebSageRefund.Decode(response.Write());
 
-                Assert.AreEqual(status, decode.Status);
+                Assert.Equal(status, decode.Status);
             }
 
         }

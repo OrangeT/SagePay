@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 using OrangeTentacle.SagePay.Response;
 
 namespace OrangeTentacle.SagePayTest.Request.Refund
 {
-    [TestFixture]
+    
     class SimulatorSageRefund
     {
         public static readonly ResponseStatus[] ValidResponses = new[]
@@ -19,21 +19,20 @@ namespace OrangeTentacle.SagePayTest.Request.Refund
                                              ResponseStatus.Error
                                          };
 
-        [Test]
-        [Repeat(100)]
+        [Fact]
         public void AValidTransactionReturnsAValidResponse()
         {
-            var request = new SagePay.Request.Refund.SimulatorSageRefund();
-            request.Transaction = RefundRequest.SampleRequest();
+            for (int i = 0; i < 100; i++)
+            {
+                var request = new SagePay.Request.Refund.SimulatorSageRefund();
+                request.Transaction = RefundRequest.SampleRequest();
 
-            request.Validate();
+                request.Validate();
 
-            var response = request.Send();
+                var response = request.Send();
 
-            Assert.Contains(ValidResponses, response.Status,
-                string.Format("Error occured for status: {0}, message: {1}",
-                    response.Status,
-                    response.StatusDetail));
+                Assert.Contains(response.Status, ValidResponses);
+            }
         }
     }
 }

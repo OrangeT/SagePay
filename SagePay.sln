@@ -1,19 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagePay", "SagePay\SagePay.csproj", "{4642C400-385F-4462-8CD7-6F86E169DE67}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagePayTest", "SagePayTest\SagePayTest.csproj", "{3C549D26-648D-4577-A7E5-2875D3B01DFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_References", "_References", "{27AC9C86-D75C-45D7-A388-DA6637F84796}"
-	ProjectSection(SolutionItems) = preProject
-		_References\Gallio.dll = _References\Gallio.dll
-		_References\Gallio35.dll = _References\Gallio35.dll
-		_References\Gallio40.dll = _References\Gallio40.dll
-		_References\MbUnit.dll = _References\MbUnit.dll
-		_References\MbUnit35.dll = _References\MbUnit35.dll
-		_References\MbUnit40.dll = _References\MbUnit40.dll
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Documentation", "_Documentation", "{11F8BD30-F078-4011-86F5-5D9FF675CD97}"
 	ProjectSection(SolutionItems) = preProject

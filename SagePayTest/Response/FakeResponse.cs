@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MbUnit.Framework;
+using Xunit;
 
 namespace OrangeTentacle.SagePayTest.Response
 {
-    [TestFixture]
+    
     public class FakeResponse
     {
-        [Test]
+        [Fact]
         public void Serialize()
         {
             // From SageDocs - response are in form:
@@ -20,7 +20,7 @@ namespace OrangeTentacle.SagePayTest.Response
             fakeResponse.Collection.Add("Test2", "TestValue2");
 
             var expected = "Test1=TestValue1\r\nTest2=TestValue2";
-            Assert.AreEqual(expected, fakeResponse.Write());
+            Assert.Equal(expected, fakeResponse.Write());
         }
     }
 

@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using MbUnit.Framework;
+using System.Linq;
+using System.Reflection;
+using Xunit;
 using OrangeTentacle.SagePay;
 using OrangeTentacle.SagePay.Request.Payment;
 using OrangeTentacle.SagePay.Request.Refund;
 
 namespace OrangeTentacle.SagePayTest
 {
-    [TestFixture]
-    internal class PathsAndTypes
+    
+    public class PathsAndTypes
     {
 
-        internal class PathMapping
+        public class PathMapping
         {
             public const string BASE_PATH = "../../Examples/";
 
@@ -28,7 +30,7 @@ namespace OrangeTentacle.SagePayTest
             }
         }
 
-        internal class ProviderMapping
+        public class ProviderMapping
         {
             public ProviderTypes ProviderType { get; set; }
             public Type PaymentType { get; set; }
@@ -42,33 +44,32 @@ namespace OrangeTentacle.SagePayTest
             }
         }
 
-        public static List<PathMapping> GetFiles()
+        public static IEnumerable<object[]> GetFiles()
         {
-            var list = new List<PathMapping>();
-            list.Add(new PathMapping("App.config.default", typeof (OfflineSagePayment), typeof (OfflineSageRefund)));
-            list.Add(new PathMapping("App.config.live", typeof (LiveSagePayment), typeof (LiveSageRefund)));
-            list.Add(new PathMapping("App.config.test", typeof (TestSagePayment), typeof (TestSageRefund)));
-            list.Add(new PathMapping("App.config.simulator", typeof (SimulatorSagePayment), typeof (SimulatorSageRefund)));
-            list.Add(new PathMapping("App.config.offline", typeof (OfflineSagePayment), typeof (OfflineSageRefund)));
+            var list = new List<object[]>();
+            list.Add(new object[] { new PathMapping("App.config.default", typeof (OfflineSagePayment), typeof (OfflineSageRefund)) });
+            list.Add(new object[] { new PathMapping("App.config.live", typeof (LiveSagePayment), typeof (LiveSageRefund)) });
+            list.Add(new object[] { new PathMapping("App.config.test", typeof (TestSagePayment), typeof (TestSageRefund)) });
+            list.Add(new object[] { new PathMapping("App.config.simulator", typeof (SimulatorSagePayment), typeof (SimulatorSageRefund)) });
+            list.Add(new object[] { new PathMapping("App.config.offline", typeof (OfflineSagePayment), typeof (OfflineSageRefund))} );
             return list;
         }
 
 
-        public static List<ProviderMapping> GetProviders()
+        public static IEnumerable<object[]> GetProviders()
         {
-            var list = new List<ProviderMapping>();
-            list.Add(new ProviderMapping(ProviderTypes.Live, typeof(LiveSagePayment), typeof(LiveSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Test, typeof(TestSagePayment), typeof(TestSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Simulator, typeof(SimulatorSagePayment), typeof(SimulatorSageRefund)));
-            list.Add(new ProviderMapping(ProviderTypes.Offline, typeof(OfflineSagePayment), typeof(OfflineSageRefund)));
+            var list = new List<object[]>();
+            list.Add(new object[] { new ProviderMapping(ProviderTypes.Live, typeof(LiveSagePayment), typeof(LiveSageRefund)) });
+            list.Add(new object[] { new ProviderMapping(ProviderTypes.Test, typeof(TestSagePayment), typeof(TestSageRefund)) });
+            list.Add(new object[] { new ProviderMapping(ProviderTypes.Simulator, typeof(SimulatorSagePayment), typeof(SimulatorSageRefund)) });
+            list.Add(new object[] { new ProviderMapping(ProviderTypes.Offline, typeof(OfflineSagePayment), typeof(OfflineSageRefund)) });
             return list;
         }
 
-        [Test]
-        [Factory("GetFiles")]
+        [Theory, MemberData("GetFiles")]
         public void TestFilesExist(PathMapping mapping)
         {
-            Assert.IsTrue(File.Exists(mapping.FileName));
+            Assert.True(File.Exists(mapping.FileName));
         }
     }
 }

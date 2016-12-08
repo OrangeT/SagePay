@@ -2,61 +2,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MbUnit.Framework;
+using Xunit;
 
 namespace OrangeTentacle.SagePayTest.Request.Refund
 {
     class RefundRequest
     {
-        [TestFixture]
-        internal class Validate
+        
+        public class Validate
         {
-            [Test]
+            [Fact]
             public void AllRequiredFields()
             {
                 var request = SampleRequest();
                 var errors = request.Validate();
 
-                Assert.AreEqual(0, errors.Count);
+                Assert.Equal(0, errors.Count);
             }
 
-            [Test]
+            [Fact]
             public void MissingFields()
             {
                 var request = new SagePay.Request.Refund.RefundRequest();
                 var errors = request.Validate();
 
-                var keys = errors.Select(x => x.Field);
+                var keys = errors.Select(x => x.Field).ToList();
 
-                Assert.Contains(keys, "VendorTxCode");
-                Assert.Contains(keys, "Amount");
-                Assert.Contains(keys, "Description");
-                Assert.Contains(keys, "RelatedVPSTxId");
-                Assert.Contains(keys, "RelatedVendorTxCode");
-                Assert.Contains(keys, "RelatedSecurityKey");
-                Assert.Contains(keys, "RelatedTxAuthNo");
+                Assert.Contains("VendorTxCode", keys);
+                Assert.Contains("Amount", keys);
+                Assert.Contains("Description", keys);
+                Assert.Contains("RelatedVPSTxId", keys);
+                Assert.Contains("RelatedVendorTxCode", keys);
+                Assert.Contains("RelatedSecurityKey", keys);
+                Assert.Contains("RelatedTxAuthNo", keys);
             }
 
-            [Test]
+            [Fact]
             public void AmountPositive()
             {
                 var request = SampleRequest();
                 request.Amount = -40;
                 var errors = request.Validate();
 
-                Assert.AreEqual(1, errors.Count);
-                Assert.AreEqual(errors.First().Field, "Amount");
+                Assert.Equal(1, errors.Count);
+                Assert.Equal(errors.First().Field, "Amount");
             }
 
-            [Test]
+            [Fact]
             public void TxAuthNumberPositive()
             {
                 var request = SampleRequest();
                 request.RelatedTxAuthNo = -40;
                 var errors = request.Validate();
 
-                Assert.AreEqual(1, errors.Count);
-                Assert.AreEqual(errors.First().Field, "RelatedTxAuthNo");
+                Assert.Equal(1, errors.Count);
+                Assert.Equal(errors.First().Field, "RelatedTxAuthNo");
             }
         }
 

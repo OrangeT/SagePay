@@ -1,75 +1,68 @@
 using System.Linq;
-using MbUnit.Framework;
+using System.Reflection;
+using Xunit;
 using OrangeTentacle.SagePay.Request.Payment;
 using OrangeTentacle.SagePay.Request.Refund;
 
 namespace OrangeTentacle.SagePayTest
 {
-    [TestFixture]
+    
     public class SagePayFactory
     {
-        [TestFixture]
-        internal class Payment
+        
+        public class Payment
         {
-            [TestFixture]
-            internal class Fetch
+            
+            public class Fetch
             {
-                [Test]
+                [Fact]
                 public void Default()
                 {
                     var provider = SagePay.SagePayFactory.Payment.Fetch();
-                    Assert.IsInstanceOfType<OfflineSagePayment>(provider);
+                    Assert.IsType<OfflineSagePayment>(provider);
                 }
 
-                [Test]
-                [Factory(typeof (PathsAndTypes), "GetProviders")]
+                [Theory, MemberData("GetProviders", MemberType = typeof(PathsAndTypes))]
                 public void ForProviderTypes(PathsAndTypes.ProviderMapping mapping)
                 {
                     var provider = SagePay.SagePayFactory.Payment.Fetch(mapping.ProviderType);
-                    Assert.IsInstanceOfType(mapping.PaymentType, provider,
-                                            string.Format("Failed to return Type {0} for ProviderType {1}",
-                                                          mapping.PaymentType, mapping.ProviderType));
+                    Assert.IsType(mapping.PaymentType, provider);
                 }
 
-                [Test]
-                [Factory(typeof (PathsAndTypes), "GetFiles")]
+                [Theory, MemberData("GetFiles", MemberType = typeof(PathsAndTypes))]
                 public void ForConfigFiles(PathsAndTypes.PathMapping mapping)
                 {
                     var provider = SagePay.SagePayFactory.Payment.Fetch(mapping.FileName);
-                    Assert.IsInstanceOfType(mapping.PaymentType, provider);
+                    Assert.IsType(mapping.PaymentType, provider);
                 }
             }
         }
 
-        [TestFixture]
-        internal class Refund
+        
+        public class Refund
         {
-            [TestFixture]
-            internal class Fetch
+            
+            public class Fetch
             {
-                [Test]
+                [Fact]
                 public void Default()
                 {
                     var provider = SagePay.SagePayFactory.Refund.Fetch();
-                    Assert.IsInstanceOfType<OfflineSageRefund>(provider);
+                    Assert.IsType<OfflineSageRefund>(provider);
                 }
 
-                [Test]
-                [Factory(typeof(PathsAndTypes), "GetProviders")]
+                [Theory, MemberData("GetProviders", MemberType = typeof(PathsAndTypes))]
                 public void ForProviderTypes(PathsAndTypes.ProviderMapping mapping)
                 {
                     var provider = SagePay.SagePayFactory.Refund.Fetch(mapping.ProviderType);
-                    Assert.IsInstanceOfType(mapping.RefundType, provider,
-                                            string.Format("Failed to return Type {0} for ProviderType {1}",
-                                                          mapping.RefundType, mapping.ProviderType));
+                    Assert.IsType(mapping.RefundType, provider);
                 }
 
-                [Test]
-                [Factory(typeof(PathsAndTypes), "GetFiles")]
+                [Theory, MemberData("GetFiles", MemberType = typeof(PathsAndTypes))]
                 public void ForConfigFiles(PathsAndTypes.PathMapping mapping)
                 {
                     var provider = SagePay.SagePayFactory.Refund.Fetch(mapping.FileName);
-                    Assert.IsInstanceOfType(mapping.RefundType, provider);
+                    Assert.IsType(mapping.RefundType, provider);
                 }
             }
         }

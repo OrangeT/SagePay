@@ -28,20 +28,20 @@ namespace OrangeTentacle.SagePayTest
         public CardType CardType { get; set; }
         public string Number { get; set; }
 
-        public static List<SampleCard> AllCards()
+        public static IEnumerable<object[]> AllCards()
         {
-            return new List<SampleCard>
+            return new List<object[]>
                 {
-                    new SampleCard {CardType = CardType.Visa, Number = VISA},
-                    new SampleCard {CardType = CardType.Delta, Number = DELTA},
-                    new SampleCard {CardType = CardType.Uke, Number = UKE},
-                    new SampleCard {CardType = CardType.Mc, Number = MC},
-                    new SampleCard {CardType = CardType.Maestro, Number = UK_MAESTRO},
-                    new SampleCard {CardType = CardType.Maestro, Number = INTL_MAESTRO},
-                    new SampleCard {CardType = CardType.Amex, Number = AMEX},
-                    new SampleCard {CardType = CardType.Jcb, Number = JCB},
-                    new SampleCard {CardType = CardType.Dc, Number = DC},
-                    new SampleCard {CardType = CardType.Laser, Number = LASER}
+                    new [] { new SampleCard {CardType = CardType.Visa, Number = VISA} },
+                    new [] { new SampleCard {CardType = CardType.Delta, Number = DELTA} },
+                    new [] { new SampleCard {CardType = CardType.Uke, Number = UKE} },
+                    new [] { new SampleCard {CardType = CardType.Mc, Number = MC} },
+                    new [] { new SampleCard {CardType = CardType.Maestro, Number = UK_MAESTRO} },
+                    new [] { new SampleCard {CardType = CardType.Maestro, Number = INTL_MAESTRO} },
+                    new [] { new SampleCard {CardType = CardType.Amex, Number = AMEX} },
+                    new [] { new SampleCard {CardType = CardType.Jcb, Number = JCB} },
+                    new [] { new SampleCard {CardType = CardType.Dc, Number = DC} },
+                    new [] { new SampleCard {CardType = CardType.Laser, Number = LASER} }
                 };
         }
 
