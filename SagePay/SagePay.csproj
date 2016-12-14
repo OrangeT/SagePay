@@ -65,6 +65,7 @@
     <Compile Include="Response\RefundResponse.cs" />
     <Compile Include="Response\ResponseStatus.cs" />
     <Compile Include="Response\ThreeDSecureStatus.cs" />
+    <Compile Include="Sugar\Crypto.cs" />
     <Compile Include="Sugar\Luhn.cs" />
     <Compile Include="Configuration\SageConfiguration.cs" />
     <Compile Include="Request\Payment\OfflineSagePayment.cs" />

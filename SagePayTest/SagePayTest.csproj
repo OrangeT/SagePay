@@ -67,6 +67,7 @@
     <Compile Include="Request\Refund\RefundRequest.cs" />
     <Compile Include="Response\FakeResponse.cs" />
     <Compile Include="Response\RefundResponse.cs" />
+    <Compile Include="Sugar\Crypto.cs" />
     <Compile Include="Sugar\Luhn.cs" />
     <Compile Include="Configuration\SageConfiguration.cs" />
     <Compile Include="Request\Payment\OfflineSagePayment.cs" />
