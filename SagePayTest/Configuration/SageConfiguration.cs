@@ -18,5 +18,15 @@ namespace OrangeTentacle.SagePayTest.Configuration
                 Assert.False(string.IsNullOrWhiteSpace(section.VendorName));
             }
         }
+        
+        public class EncodeKey
+        {
+            [Fact]
+            public void FromConfigFile()
+            {
+                var section = SagePay.Configuration.SageConfiguration.GetSection(CONFIG_TYPE);
+                Assert.False(string.IsNullOrEmpty(section.EncodeKey));
+            }
+        }
     }
 }

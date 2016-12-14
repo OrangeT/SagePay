@@ -18,5 +18,11 @@ namespace OrangeTentacle.SagePay.Configuration
         {
             get { return (string)this["vendorName"]; }
         }
+
+        [ConfigurationProperty("encodeKey", IsRequired = false)]
+        public string EncodeKey
+        {
+            get { return (string)this["encodeKey"]; }
+        }
     }
 }
