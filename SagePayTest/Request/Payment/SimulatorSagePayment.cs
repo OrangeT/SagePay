@@ -21,7 +21,7 @@ namespace OrangeTentacle.SagePayTest.Request.Payment
         {
             /* Please note - IP address needs to be valid with SagePay */
 
-            [Fact]
+            [Fact(Skip = "Requires IP whitelisting")]
             public void AValidTransactionReturnsAValidResponse()
             {
                 for (var i = 0; i < 100; i++)
