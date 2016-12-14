@@ -70,6 +70,11 @@ namespace OrangeTentacle.SagePay.Sugar
                 throw new ArgumentNullException(nameof(key), "Crypto key can not be null.");
             }
 
+            if (key.Length != 16)
+            {
+                throw new ArgumentOutOfRangeException(nameof(key), "Must be have length of 16");
+            }
+
             if (value == null)
             {
                 return null;
