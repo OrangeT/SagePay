@@ -1,16 +1,36 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Text;
+using OrangeTentacle.SagePay.Configuration;
 
 namespace OrangeTentacle.SagePay.Sugar
 {
     public static class Crypto
     {
+
+        /// <summary>
+        /// Encodes a string for submission to SagePay via a POST form.
+        /// Uses the default provider for the decode key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+
+        public static string Encode(string value)
+        {
+            var config = ConfigurationManager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
+
+            var provider = config.Providers[config.Default];
+
+            return Encode(provider.EncodeKey, value);
+        }
+
+
         /// <summary>
         /// Encodes a string for submission to SagePay via a POST form.
         /// </summary>
@@ -54,6 +74,22 @@ namespace OrangeTentacle.SagePay.Sugar
             }
 
             return "@" + new SoapHexBinary(encrypted);
+        }
+
+        /// <summary>
+        /// Decodes a string form response from a SagePay session.
+        /// Uses the default provider for the decode key.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        
+        public static string Decode(string value)
+        {
+            var config = ConfigurationManager.GetSection(SageConfiguration.sectionName) as SageConfiguration;
+
+            var provider = config.Providers[config.Default];
+
+            return Decode(provider.EncodeKey, value);
         }
 
         /// <summary>
