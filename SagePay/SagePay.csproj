@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Configuration\SageProviderCollection.cs" />
     <Compile Include="Configuration\SageProviderConfiguration.cs" />
+    <Compile Include="Forms\LiveSageForm.cs" />
+    <Compile Include="Forms\TestSageForm.cs" />
     <Compile Include="ProviderTypes.cs" />
     <Compile Include="Request\BaseSageRequest.cs" />
     <Compile Include="Request\CardType.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Request\ValidationError.cs" />
     <Compile Include="Request\VendorRequest.cs" />
     <Compile Include="Request\Payment\WebSagePayment.cs" />
+    <Compile Include="Forms\SageForm.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
