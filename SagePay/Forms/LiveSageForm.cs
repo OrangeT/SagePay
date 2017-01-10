@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OrangeTentacle.SagePay.Forms
+﻿namespace OrangeTentacle.SagePay.Forms
 {
     public class LiveSageForm : SageForm
     {
-        public LiveSageForm(ProviderTypes type) : base(type)
+        private const string _url = "https://live.sagepay.com/gateway/service/vspdirect-register.vsp";
+        private const ProviderTypes _type = ProviderTypes.Live;
+
+        public LiveSageForm() 
+            : base(_type, _url)
         {
-            SetUrl();
         }
 
-        public LiveSageForm(string vendorName, string encodeKey) : base(vendorName, encodeKey)
+        public LiveSageForm(string vendorName, string encodeKey) 
+            : base(vendorName, encodeKey, _url)
         {
-            SetUrl();
-        }
-
-        private void SetUrl()
-        {
-            Url = "https://live.sagepay.com/gateway/service/vspform-register.vsp";
         }
     }
 }
+

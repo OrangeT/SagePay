@@ -16,20 +16,22 @@ namespace OrangeTentacle.SagePay.Forms
 
         private Dictionary<string, string> _cryptParameters;
 
-        protected SageForm(ProviderTypes type) :
-            base(type)
+        protected SageForm(ProviderTypes type, string url)
+            : base(type)
         {
             var config = SageConfiguration.GetSection(type);
 
             EncodeKey = config.EncodeKey;
+            Url = url;
 
             SetBaseParams();
         }
 
-        protected SageForm(string vendorName, string encodeKey)
+        protected SageForm(string vendorName, string encodeKey, string url)
             : base(vendorName)
         {
             EncodeKey = encodeKey;
+            Url = url;
 
             SetBaseParams();
         }

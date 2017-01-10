@@ -2,19 +2,17 @@
 {
     public class TestSageForm : SageForm
     {
-        public TestSageForm(ProviderTypes type) : base(type)
+        private const string _url = "https://live.sagepay.com/gateway/service/vspdirect-register.vsp";
+        private const ProviderTypes _type = ProviderTypes.Live;
+
+        public TestSageForm() 
+            : base(_type, _url)
         {
-            SetUrl();
         }
 
-        public TestSageForm(string vendorName, string encodeKey) : base(vendorName, encodeKey)
+        public TestSageForm(string vendorName, string encodeKey) 
+            : base(vendorName, encodeKey, _url)
         {
-            SetUrl();
-        }
-
-        private void SetUrl()
-        {
-            Url = "https://test.sagepay.com/gateway/service/vspform-register.vsp";
         }
     }
 }
