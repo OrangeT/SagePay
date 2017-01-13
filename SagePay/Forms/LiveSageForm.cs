@@ -2,7 +2,7 @@
 {
     public class LiveSageForm : SageForm
     {
-        private const string _url = "https://live.sagepay.com/gateway/service/vspdirect-register.vsp";
+        private const string _url = "https://live.sagepay.com/gateway/service/vspform-register.vsp";
         private const ProviderTypes _type = ProviderTypes.Live;
 
         public LiveSageForm() 
