@@ -6,3 +6,5 @@ obj
 bin
 *.user
 *.swp
+
+packages/

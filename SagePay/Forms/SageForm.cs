@@ -41,7 +41,7 @@ namespace OrangeTentacle.SagePay.Forms
             BodyParameters = new Dictionary<string, string>();
             _cryptParameters = new Dictionary<string, string>();
 
-            BodyParameters.Add("VPSProtocol", "3.00");
+            BodyParameters.Add("VPSProtocol", "4.00");
             BodyParameters.Add("TxType", "PAYMENT");
             BodyParameters.Add("Vendor", Vendor.VendorName);
         }
@@ -119,4 +119,4 @@ namespace OrangeTentacle.SagePay.Forms
         }
     }
 }
- 
+
