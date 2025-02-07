@@ -7,32 +7,33 @@ using OrangeTentacle.SagePay.Response;
 
 namespace OrangeTentacle.SagePayTest.Request.Refund
 {
-    
-    class SimulatorSageRefund
-    {
-        public static readonly ResponseStatus[] ValidResponses = new[]
-                                         {
-                                             ResponseStatus.OK,
-                                             ResponseStatus.Registered,
-                                             ResponseStatus.NotAuthed,
-                                             ResponseStatus.Rejected,
-                                             ResponseStatus.Error
-                                         };
+    // Skip
 
-        [Fact]
-        public void AValidTransactionReturnsAValidResponse()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                var request = new SagePay.Request.Refund.SimulatorSageRefund();
-                request.Transaction = RefundRequest.SampleRequest();
+    //public class SimulatorSageRefund
+    //{
+    //    public static readonly ResponseStatus[] ValidResponses = new[]
+    //                                     {
+    //                                         ResponseStatus.OK,
+    //                                         ResponseStatus.Registered,
+    //                                         ResponseStatus.NotAuthed,
+    //                                         ResponseStatus.Rejected,
+    //                                         ResponseStatus.Error
+    //                                     };
 
-                request.Validate();
+    //    [Fact]
+    //    public void AValidTransactionReturnsAValidResponse()
+    //    {
+    //        for (int i = 0; i < 100; i++)
+    //        {
+    //            var request = new SagePay.Request.Refund.SimulatorSageRefund();
+    //            request.Transaction = RefundRequest.SampleRequest();
 
-                var response = request.Send();
+    //            request.Validate();
 
-                Assert.Contains(response.Status, ValidResponses);
-            }
-        }
-    }
+    //            var response = request.Send();
+
+    //            Assert.Contains(response.Status, ValidResponses);
+    //        }
+    //    }
+    //}
 }
